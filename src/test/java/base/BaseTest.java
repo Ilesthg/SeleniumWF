@@ -61,6 +61,6 @@ public class BaseTest {
     @AfterSuite
     public void closeDriver() {
         System.out.println("Closing Driver");
-        driver.close();
+     //   driver.close();
     }
 }
