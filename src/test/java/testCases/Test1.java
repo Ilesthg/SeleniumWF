@@ -12,4 +12,8 @@ public class Test1 extends BaseTest {
     public void gotoPage() {
         FacebookLoginPage.loginFacebook();
     }
+    @Test
+    public void test2() {
+
+    }
 }
