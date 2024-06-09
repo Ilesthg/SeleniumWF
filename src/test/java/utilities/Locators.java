@@ -13,6 +13,7 @@ import java.util.List;
 public class Locators extends BaseTest {
 
     static WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+
     public static WebElement findElement(String elementType, String elementValue) {
         if (elementType.equalsIgnoreCase("Xpath")) {
             return driver.findElement(By.xpath(elementValue));
@@ -31,6 +32,7 @@ public class Locators extends BaseTest {
             return null;
         }
     }
+
     public static List<WebElement> findElementS(String elementType, String elementValue) {
         if (elementType.equalsIgnoreCase("Xpath")) {
             return driver.findElements(By.xpath(elementValue));
@@ -49,23 +51,13 @@ public class Locators extends BaseTest {
             return null;
         }
     }
+
     public static WebElement findElementWithWait(String elementType, String elementValue) {
-       /*
-       switch (elementType) {
-            case "XPATH":
-                return  wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(elementValue)));
 
-            case "CSS":
-                return  wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(elementValue)));
-
-            default:
-                System.out.println("No Locator");
-                return null;
-        }
-        */ if (elementType.equalsIgnoreCase("Xpath")) {
-            return  wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(elementValue)));
+        if (elementType.equalsIgnoreCase("Xpath")) {
+            return wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(elementValue)));
         } else if (elementType.equalsIgnoreCase("Css")) {
-            return  wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(elementValue)));
+            return wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(elementValue)));
         } else if (elementType.equalsIgnoreCase("ID")) {
             return wait.until(ExpectedConditions.presenceOfElementLocated(By.id(elementValue)));
         } else if (elementType.equalsIgnoreCase("ClassName")) {
@@ -81,16 +73,26 @@ public class Locators extends BaseTest {
 
 
     }
-    public static List<WebElement> findElementsWithWait(String elementType, String elementValue) {
-        switch (elementType) {
-            case "XPATH":
-                return   wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath(elementValue)));
-            case "CSS":
-                return  driver.findElements(By.cssSelector(elementValue));
 
-            default:
-                System.out.println("No Locator");
-                return null;
+    public static List<WebElement> findElementsWithWait(String elementType, String elementValue) {
+        if (elementType.equalsIgnoreCase("Xpath")) {
+            return wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath(elementValue)));
+        } else if (elementType.equalsIgnoreCase("Css")) {
+            return wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.cssSelector(elementValue)));
+        } else if (elementType.equalsIgnoreCase("ID")) {
+            return wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id(elementValue)));
+        } else if (elementType.equalsIgnoreCase("ClassName")) {
+            return wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.className(elementValue)));
+        } else if (elementType.equalsIgnoreCase("LinkText")) {
+            return wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.linkText(elementValue)));
+        } else if (elementType.equalsIgnoreCase("PartialLinkText")) {
+            return wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.partialLinkText(elementValue)));
+        } else {
+            System.out.println("No Locator");
+            return null;
         }
+
+
+
     }
 }
