@@ -1,17 +1,5 @@
 package base;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.edge.EdgeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.testng.annotations.AfterSuite;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeSuite;
-import org.testng.annotations.BeforeTest;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.Properties;
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.Status;
@@ -19,11 +7,19 @@ import com.aventstack.extentreports.markuputils.ExtentColor;
 import com.aventstack.extentreports.markuputils.MarkupHelper;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 import com.aventstack.extentreports.reporter.configuration.Theme;
+import io.github.bonigarcia.wdm.WebDriverManager;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
-import java.io.File;
+
+import java.io.FileReader;
+import java.io.IOException;
 import java.lang.reflect.Method;
 import java.time.Duration;
+import java.util.Properties;
 
 public class BaseTest {
 
@@ -31,7 +27,7 @@ public class BaseTest {
     public ExtentSparkReporter sparkReporter;
     public ExtentReports extent;
     public ExtentTest logger;
-    private String routeDir = System.getProperty("user.dir");
+    private final String routeDir = System.getProperty("user.dir");
     private String browser, url;
 
     FileReader fr;
