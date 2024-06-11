@@ -1,0 +1,5 @@
+Need to be careful while getting size of Rows
+
+sheet.getLastRowNum(); will give you total rows -1 of excel sheet
+sheet.getPhysicalNumberOfRows(); - Will give you total rows
+

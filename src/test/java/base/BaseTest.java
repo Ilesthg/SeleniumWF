@@ -68,7 +68,7 @@ public class BaseTest {
     public void beforeMethod(Method testMethod) {
         logger = extent.createTest(testMethod.getName());
         setupDriver();
-        driver.get(url);
+    //    driver.get(url);
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
     }
@@ -96,7 +96,7 @@ public class BaseTest {
     }
 
 
-    @AfterSuite
+    @AfterSuite//or AfterSuite
     public void closeDriver() {
         System.out.println("Closing Driver");
         //   driver.close();
