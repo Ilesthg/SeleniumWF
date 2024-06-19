@@ -10,48 +10,53 @@ import com.aventstack.extentreports.reporter.configuration.Theme;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
+import utilities.PropertiesReader;
 
-import java.io.FileReader;
-import java.io.IOException;
 import java.lang.reflect.Method;
 import java.time.Duration;
-import java.util.Properties;
+import java.util.concurrent.TimeUnit;
 
 public class BaseTest {
 
     public static WebDriver driver;
-    public ExtentSparkReporter sparkReporter;
-    public ExtentReports extent;
-    public ExtentTest logger;
-    private final String routeDir = System.getProperty("user.dir");
     private String browser, url;
+    private final String routeDir = System.getProperty("user.dir");
 
-    FileReader fr;
-    Properties prop = new Properties();
+    //Use 1 time
+    public ExtentReports extent;
+    //Use n time
+    public ExtentTest logger;
+
+    public ExtentSparkReporter sparkReporter;
+
+   /* FileReader fr;
+    Properties prop = new Properties();*/
 
 
     @BeforeSuite
-    public void initDriver() throws IOException {
+    public void initDriver() throws Exception {
         System.out.println("Initialazing Driver and Reading properties file");
 
         if (driver == null) {
-            fr = new FileReader(routeDir + "/src/test/resources/configFiles/data.properties");
-            prop.load(fr);
+            /*fr = new FileReader(routeDir + "/src/test/resources/configFiles/data.properties");
+            prop.load(fr);*/
+            browser =  PropertiesReader.giveKeyValueFromProperties("browser");
+            url =  PropertiesReader.giveKeyValueFromProperties("url");
         }
-        browser = prop.getProperty("browser");
-        url = prop.getProperty("url");
     }
 
 
 
     @BeforeTest
-    public void beforeTestMethod() {
-        //System.out.println(System.getProperty("user.dir") + File.separator + "src/test/resources/reports" + File.separator + "SDTE.html");
-        //sparkReporter = new ExtentSparkReporter(System.getProperty("user.dir") + File.separator + "/src/test/resources/reports" + File.separator + "SDTE.html");
+    public void beforeTestM() {
+
         sparkReporter = new ExtentSparkReporter(routeDir + "/src/test/resources/reports/SDTE.html");
         extent = new ExtentReports();
         extent.attachReporter(sparkReporter);
@@ -59,7 +64,7 @@ public class BaseTest {
         extent.setSystemInfo("Hostname", "RHEL8");
         extent.setSystemInfo("Username", "root");
         sparkReporter.config().setDocumentTitle("Automation Report");
-        sparkReporter.config().setReportName("Atiomation Test results");
+        sparkReporter.config().setReportName("Automation Test results");
     }
 
 
@@ -68,16 +73,14 @@ public class BaseTest {
     public void beforeMethod(Method testMethod) {
         logger = extent.createTest(testMethod.getName());
         setupDriver();
-    //    driver.get(url);
         driver.manage().window().maximize();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
+        driver.manage().timeouts().implicitlyWait(10 , TimeUnit.SECONDS);
+        driver.navigate().to(url);
     }
-
-
-
     @AfterMethod
     public void afterMethod(ITestResult result) {
-        if (result.getStatus() == ITestResult.FAILURE) {
+
+       if (result.getStatus() == ITestResult.FAILURE) {
             logger.log(Status.FAIL, MarkupHelper.createLabel(result.getName() + " - Test case failed", ExtentColor.RED));
             logger.log(Status.FAIL, MarkupHelper.createLabel(result.getThrowable() + " - Test case failed", ExtentColor.RED));
         } else if (result.getStatus() == ITestResult.SKIP) {
@@ -85,7 +88,8 @@ public class BaseTest {
         } else if (result.getStatus() == ITestResult.SUCCESS) {
             logger.log(Status.PASS, MarkupHelper.createLabel(result.getName() + " - Test case SUCCESS", ExtentColor.GREEN));
         }
-        driver.quit();
+
+        //driver.quit();
     }
 
 
@@ -99,25 +103,35 @@ public class BaseTest {
     @AfterSuite//or AfterSuite
     public void closeDriver() {
         System.out.println("Closing Driver");
-        //   driver.close();
+       //  driver.close();
     }
+
 
 
     public void setupDriver() {
         if (browser.equalsIgnoreCase("Chrome")) {
             WebDriverManager.chromedriver().setup();
-            driver = new ChromeDriver();
+            ChromeOptions chromeOptions = new ChromeOptions();
+            chromeOptions.addArguments("--incognito");
+            driver = new ChromeDriver(chromeOptions);
             //Redirecting to URL
-            driver.get(url);
+           // driver.get(url);
 
-        } else if (prop.getProperty("browser").equalsIgnoreCase("Firefox")) {
+        } else if (browser.equalsIgnoreCase("Firefox")) {
             WebDriverManager.firefoxdriver().setup();
+            FirefoxOptions firefoxOptions = new FirefoxOptions();
+            firefoxOptions.addArguments("-private");
             driver = new FirefoxDriver();
-            driver.get(url);
-        } else if (prop.getProperty("browser").equalsIgnoreCase("Edge")) {
+         //   driver.get(url);
+        } else if (browser.equalsIgnoreCase("Edge")) {
             WebDriverManager.edgedriver().setup();
+            EdgeOptions edgeOptions = new EdgeOptions();
+            //edgeOptions.addArguments();
             driver = new EdgeDriver();
-            driver.get(url);
+         //   driver.get(url);
         }
     }
+
+
+
 }

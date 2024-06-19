@@ -24,7 +24,7 @@ public class ReaderExcelFiles extends BaseTest {
     static String routeDir = System.getProperty("user.dir");
     static XSSFWorkbook XSSFworkbook;
     static XSSFSheet XSSFsheet;
-    static WebDriver driver;
+   // static WebDriver driver;
 
     @DataProvider(name = "data")
     public static String[][] readExcel() throws IOException, InterruptedException {
@@ -92,11 +92,11 @@ public class ReaderExcelFiles extends BaseTest {
         // Initialize workbook and sheet
         String filePath = System.getProperty("user.dir") + "/src/test/resources/testData/dataExcelSheet.xlsx";
         FileInputStream file = new FileInputStream(filePath);
-        XSSFWorkbook workbook = new XSSFWorkbook(file);
-        XSSFSheet sheet = workbook.getSheet("Sheet1");
+        XSSFworkbook = new XSSFWorkbook(file);
+        XSSFsheet = XSSFworkbook.getSheet("Sheet1");
 
         // Get total rows
-        int totalRows = sheet.getLastRowNum() + 1; // Including the first row
+        int totalRows = XSSFsheet.getLastRowNum() + 1; // Including the first row
         System.out.println("Total Rows: " + totalRows);
 
         // Create DataFormatter to format cell values
@@ -105,7 +105,7 @@ public class ReaderExcelFiles extends BaseTest {
         // Determine the maximum number of columns
         int maxColumns = 0;
         for (int i = 0; i < totalRows; i++) {
-            Row row = sheet.getRow(i);
+            Row row = XSSFsheet.getRow(i);
             if (row != null && row.getLastCellNum() > maxColumns) {
                 maxColumns = row.getLastCellNum();
             }
@@ -117,7 +117,7 @@ public class ReaderExcelFiles extends BaseTest {
 
         // Iterate through rows
         for (int i = 0; i < totalRows; i++) {
-            Row row = sheet.getRow(i);
+            Row row = XSSFsheet.getRow(i);
             if (row != null) {
                 for (int j = 0; j < row.getLastCellNum(); j++) {
                     testData[i][j] = dataFormatter.formatCellValue(row.getCell(j));
@@ -126,7 +126,7 @@ public class ReaderExcelFiles extends BaseTest {
         }
 
         // Close resources
-        workbook.close();
+        XSSFworkbook.close();
         file.close();
 
         // Return the array of test data

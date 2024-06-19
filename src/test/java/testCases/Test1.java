@@ -11,11 +11,12 @@ import java.io.IOException;
 
 public class Test1 extends BaseTest {
 
+    //Test for Excel Sheet
+
     @Test
-    public void gotoPage() {
+    public void gotoPage1(){
         FacebookLoginPage.loginFacebook();
     }
-
     @Test(dataProviderClass = ReaderExcelFiles.class, dataProvider = "ExcelData")
     public void Sheet1(String username, String password) throws IOException {
         FacebookLoginPage.Sheet1(username, password);
@@ -31,6 +32,8 @@ public class Test1 extends BaseTest {
     public void readExcelsheet() throws IOException, InterruptedException {
         ReaderExcelFiles.readExcel();
     }
-
-
+    @Test
+    public void testFindByLocators() throws IllegalAccessException {
+    FacebookLoginPage.locatorNewStrategyFindBy();
+    }
 }
