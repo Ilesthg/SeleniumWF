@@ -2,49 +2,56 @@ package utilities;
 
 
 import base.BaseTest;
-import locators.FacebookFindByLocators;
+
+import objects.FacebookLoginPage__PageFactory;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
-import java.util.ArrayList;
 import java.util.List;
 
 public class LocatorsFindBy extends BaseTest {
 
-
-
-
-    private WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+//    WebDriver driver =  driverFromBaseTest();
+    private WebDriverWait wait;
+     private WebDriver driver ;
     //Initi Elements from FindByLocators, else you can init on Constructor here
-    private FacebookFindByLocators elements = new FacebookFindByLocators(driver);
-    public FacebookFindByLocators getElements() {
+    private FacebookLoginPage__PageFactory elements;
+
+    public FacebookLoginPage__PageFactory getElements() {
         return elements;
     }
 
+     public LocatorsFindBy(WebDriver driver) {
+        this.driver = driver;
+         this.elements =  new FacebookLoginPage__PageFactory(driver);
+          this.wait =  new WebDriverWait(driver, Duration.ofSeconds(5));;
+     }
+    public WebElement findElementBy(WebElement element) throws IllegalAccessException {
+        //  return element; //Ya esta establecida el locator el la Class FindBy Objects
+        By by = LocatorSpecified___FindBy.getByFromWebElement(elements, element);
+        return driver.findElement(by);
 
-   /* public LocatorsFindBy(FindByLocators elements) {
-        this.elements = elements;
-     //   this.wait = wait;
-    }*/
-    public WebElement findElementBy(WebElement element) {return element;}
+    }
+
+    public List<WebElement> findElementS(WebElement element) throws IllegalAccessException {
+        By by = LocatorSpecified___FindBy.getByFromWebElement(elements, element);
+        return driver.findElements(by);
+    }
 
     public WebElement findElementwithWait(WebElement element) throws IllegalAccessException {
-        By by = LocatorSpecified___FindBy.getByFromWebElement(this.elements, element);
-        return  wait.until(ExpectedConditions.visibilityOfElementLocated(by));
-
+        By by = LocatorSpecified___FindBy.getByFromWebElement(elements, element);
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(by));
     }
 
 
-
-    public static List<WebElement> findElementS(WebElement elementValue) {
-        return new ArrayList<WebElement>();
+    public  List<WebElement> findElementSWithWait(WebElement element) throws IllegalAccessException{
+        By by = LocatorSpecified___FindBy.getByFromWebElement(elements, element);
+        return wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(by));
     }
-
-    public static List<WebElement> findElementsWithWait(String elementType, String elementValue) {return null;}
-
 
 
 }

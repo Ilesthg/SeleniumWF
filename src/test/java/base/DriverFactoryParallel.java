@@ -4,13 +4,13 @@ package base;
 
 import org.openqa.selenium.WebDriver;
 
-public class DriverFatory_Logic_Thread {
-    private DriverFatory_Logic_Thread() {
+public class DriverFactoryParallel {
+    private DriverFactoryParallel() {
     }
 
-    private static final DriverFatory_Logic_Thread instanceFactoryOfDrivers = new DriverFatory_Logic_Thread();
+    private static final DriverFactoryParallel instanceFactoryOfDrivers = new DriverFactoryParallel();
 
-    public static DriverFatory_Logic_Thread getInstance() {
+    public static DriverFactoryParallel getInstance() {
         return instanceFactoryOfDrivers;
     }
 

@@ -1,7 +1,7 @@
 package utilities;
 
 
-import locators.FacebookFindByLocators;
+import objects.FacebookLoginPage__PageFactory;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -14,15 +14,15 @@ public class LocatorsFindByThread {
 
     private WebDriverWait wait;
 
-    private FacebookFindByLocators elements;
+    private FacebookLoginPage__PageFactory elements;
 
-    public FacebookFindByLocators getElements() {
+    public FacebookLoginPage__PageFactory getElements() {
         return elements;
     }
 
     public LocatorsFindByThread(WebDriver driver) {
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(5));
-        this.elements = new FacebookFindByLocators(driver);
+        this.elements = new FacebookLoginPage__PageFactory(driver);
     }
 
     public WebElement findElement(WebElement element) {
