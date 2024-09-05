@@ -26,7 +26,8 @@ public class LocatorsFindBy extends BaseTest {
     }
 
      public LocatorsFindBy(WebDriver driver) {
-        this.driver = driver;
+         super();
+         this.driver = driver;
          this.elements =  new FacebookLoginPage__PageFactory(driver);
           this.wait =  new WebDriverWait(driver, Duration.ofSeconds(5));;
      }

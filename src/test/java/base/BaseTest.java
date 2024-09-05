@@ -24,30 +24,33 @@ import java.io.FileReader;
 import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Objects;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
+//Leaving as public so we can extend from test clases
 public class BaseTest {
+
+    //Making constructor protected, so only child class can see constructor
+    protected BaseTest() {
+    }
+
 
     private WebDriver driver;
     private String browser, url;
+    private BrowserFactory bf = new BrowserFactory();
     private final String routeDir = System.getProperty("user.dir");
 
     //Use 1 time
     private ExtentReports extent;
     //Use n time
     public static ExtentTest logger;
-
-    private ExtentSparkReporter sparkReporter;
-
-    FileReader fr;
-    Properties prop = new Properties();
-     protected  Locators loc;
+    protected Locators loc;
 
 
     @BeforeSuite
     public void initDriver() throws Exception {
-        System.out.println("Initialazing Driver and Reading properties file");
+        System.out.println("Reading properties file");
 
         browser = PropertiesReader.giveKeyValueFromProperties("browser");
         url = PropertiesReader.giveKeyValueFromProperties("url");
@@ -60,7 +63,7 @@ public class BaseTest {
         Date date = new Date();
 
         String ssDate = format.format(date);
-        sparkReporter = new ExtentSparkReporter(routeDir + "/src/test/resources/reports/SDTE" + ssDate + ".html");
+        ExtentSparkReporter sparkReporter = new ExtentSparkReporter(routeDir + "/src/test/resources/reports/SDTE" + ssDate + ".html");
         extent = new ExtentReports();
         extent.attachReporter(sparkReporter);
         sparkReporter.config().setTheme(Theme.DARK);
@@ -72,10 +75,11 @@ public class BaseTest {
 
 
     @BeforeMethod
-    public void beforeMethod(Method testMethod) {
+    public void beforeMethod(Method testMethod) throws Exception {
+        System.out.println("Initialazing Driver");
         logger = extent.createTest(testMethod.getName());
-        if (driver == null) {
-            driver = setupDriver();
+        if (Objects.isNull(driver)) {
+            driver = bf.setupDriverReturn(browser);
         }
 
         driver.manage().window().maximize();
@@ -111,7 +115,7 @@ public class BaseTest {
 
     @AfterSuite//or AfterSuite
     public void closeDriver() {
-      if (driver != null) {
+        if (Objects.nonNull(driver)) {
             driver.quit();
             driver = null;
         }
@@ -119,34 +123,9 @@ public class BaseTest {
     }
 
     //TO GET DRIVER
-    public  WebDriver getDriverBT() {
+    public WebDriver getDriverBT() {
         return driver;
     }
 
-
-    public WebDriver setupDriver() {
-        if (browser.equalsIgnoreCase("Chrome")) {
-            WebDriverManager.chromedriver().setup();
-            ChromeOptions chromeOptions = new ChromeOptions();
-            chromeOptions.addArguments("--incognito");
-            return driver = new ChromeDriver(chromeOptions);
-            //Redirecting to URL
-            // driver.get(url);
-
-        } else if (browser.equalsIgnoreCase("Firefox")) {
-            WebDriverManager.firefoxdriver().setup();
-            FirefoxOptions firefoxOptions = new FirefoxOptions();
-            firefoxOptions.addArguments("-private");
-            return driver = new FirefoxDriver();
-            //   driver.get(url);
-        } else if (browser.equalsIgnoreCase("Edge")) {
-            WebDriverManager.edgedriver().setup();
-            EdgeOptions edgeOptions = new EdgeOptions();
-            //edgeOptions.addArguments();
-            return driver = new EdgeDriver();
-            //   driver.get(url);
-        }
-        return null;
-    }
 
 }

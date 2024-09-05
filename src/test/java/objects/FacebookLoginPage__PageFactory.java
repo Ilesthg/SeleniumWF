@@ -5,8 +5,9 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-public class FacebookLoginPage__PageFactory { //PAGE FACTORY
-   /* WebDriver driver;*/
+public final class FacebookLoginPage__PageFactory { //PAGE FACTORY
+
+
     @FindBy(xpath = "//input[@id='email']")
     private   WebElement emailTXT;
     @FindBy(xpath = "//input[@id='pass']")
@@ -31,9 +32,8 @@ public class FacebookLoginPage__PageFactory { //PAGE FACTORY
 
 
 
-//Constructor
+//Constructor and initelement for PageFactory
     public FacebookLoginPage__PageFactory(WebDriver driver) {
-       // this.driver = driver;
         //wait = new WebDriverWait(driver, Duration.ofSeconds(5));;
         PageFactory.initElements(driver, this);
     }

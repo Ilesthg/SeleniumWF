@@ -3,6 +3,7 @@ package pages;
 import base.BaseTest;
 import objects.FaceLoginObjects;
 
+import org.openqa.selenium.By;
 import org.testng.annotations.Test;
 import utilities.*;
 
@@ -10,9 +11,13 @@ import java.io.IOException;
 import java.util.HashMap;
 
 
-public class FacebookLoginPage extends BaseTest{
+public final class FacebookLoginPage extends BaseTest{
+    private final By bttnInciarSesion = By.xpath("//button[@id='u_0_5_VH']") ;
+    private final By inputEmail = By.xpath("//input[@id='email']") ;
+    private final By inputPassword = By.xpath("//input[@id='pass']") ;
+
     @Test
-  public   void loginFacebook() {
+  public  void loginFacebook() {
         loc.findElement("Xpath", FaceLoginObjects.emailInputField).sendKeys("HolaCrayola");
     }
   /*  @Test

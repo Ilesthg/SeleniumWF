@@ -15,9 +15,13 @@ import utilities.PropertiesReader;
 import java.util.concurrent.TimeUnit;
 
 public class BaseTestParallel {
-    BrowserFactory bf = new BrowserFactory();
+    protected  BaseTestParallel(){
+
+    }
+
 
     private static String browser,url;
+  private   BrowserFactory bf = new BrowserFactory();
 
     @BeforeMethod
     public void beforeMethod() throws Exception {
@@ -27,7 +31,7 @@ public class BaseTestParallel {
 
 
         if (DriverFactoryParallel.getInstance().getDriver() == null) {
-            DriverFactoryParallel.getInstance().setDriver(setupDriver());
+            DriverFactoryParallel.getInstance().setDriver(bf.setupDriverReturn(browser));
         }
 
 
@@ -43,30 +47,6 @@ public class BaseTestParallel {
     public void afterMethod(ITestResult result) {
         DriverFactoryParallel.getInstance().closeDrivers();
     }
-    public WebDriver setupDriver() {
-        WebDriver driver =null;
-        if (browser.equalsIgnoreCase("Chrome")) {
-            WebDriverManager.chromedriver().setup();
-            ChromeOptions chromeOptions = new ChromeOptions();
-            chromeOptions.addArguments("--incognito");
-            driver = new ChromeDriver(chromeOptions);
-            //Redirecting to URL
-            // driver.get(url);
 
-        } else if (browser.equalsIgnoreCase("Firefox")) {
-            WebDriverManager.firefoxdriver().setup();
-            FirefoxOptions firefoxOptions = new FirefoxOptions();
-            firefoxOptions.addArguments("-private");
-         driver = new FirefoxDriver();
-            //   driver.get(url);
-        } else if (browser.equalsIgnoreCase("Edge")) {
-            WebDriverManager.edgedriver().setup();
-            EdgeOptions edgeOptions = new EdgeOptions();
-            //edgeOptions.addArguments();
-             driver = new EdgeDriver();
-            //   driver.get(url);
-        }
-        return driver;
-    }
 
 }
