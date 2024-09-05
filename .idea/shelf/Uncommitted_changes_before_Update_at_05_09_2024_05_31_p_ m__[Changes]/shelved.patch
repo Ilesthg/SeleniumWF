@@ -1,0 +1,222 @@
+Index: src/test/java/testCases/Test1.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>\r\n\r\npackage testCases;\r\n\r\nimport base.BaseTest;\r\nimport org.testng.annotations.Test;\r\nimport pages.FacebookLoginPage;\r\nimport utilities.ReaderExcelFiles;\r\n\r\nimport java.io.IOException;\r\n\r\npublic class Test1 extends BaseTest {\r\n\r\n    //Test for Excel Sheet\r\n\r\n    @Test\r\n    public void gotoPage1(){\r\n        FacebookLoginPage.loginFacebook();\r\n    }\r\n    @Test(dataProviderClass = ReaderExcelFiles.class, dataProvider = \"ExcelData\")\r\n    public void Sheet1(String username, String password) throws IOException {\r\n        FacebookLoginPage.Sheet1(username, password);\r\n    }\r\n\r\n    @Test(dataProviderClass = ReaderExcelFiles.class, dataProvider = \"data\")\r\n    public void Sheet2(String username, String password) throws IOException {\r\n        FacebookLoginPage.Sheet2(username, password);\r\n    }\r\n\r\n\r\n    @Test\r\n    public void readExcelsheet() throws IOException, InterruptedException {\r\n        ReaderExcelFiles.readExcel();\r\n    }\r\n    @Test\r\n    public void testFindByLocators() throws IllegalAccessException {\r\n    FacebookLoginPage.locatorNewStrategyFindBy();\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/test/java/testCases/Test1.java b/src/test/java/testCases/Test1.java
+--- a/src/test/java/testCases/Test1.java	(revision 9a86ee27e22817af09a7305464da63958cb0f61c)
++++ b/src/test/java/testCases/Test1.java	(date 1725338408345)
+@@ -13,7 +13,7 @@
+ 
+     //Test for Excel Sheet
+ 
+-    @Test
++  /*  @Test
+     public void gotoPage1(){
+         FacebookLoginPage.loginFacebook();
+     }
+@@ -35,5 +35,5 @@
+     @Test
+     public void testFindByLocators() throws IllegalAccessException {
+     FacebookLoginPage.locatorNewStrategyFindBy();
+-    }
++    }*/
+ }
+\ No newline at end of file
+Index: src/test/java/pages/FacebookLoginPage.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package pages;\r\n\r\nimport base.BaseTest;\r\nimport locators.FaceLoginLocator;\r\nimport locators.FacebookFindByLocators;\r\n\r\nimport utilities.Locators;\r\nimport utilities.LocatorsFindBy;\r\n\r\nimport java.io.IOException;\r\n\r\n\r\npublic class FacebookLoginPage extends  BaseTest{\r\n\r\n\r\n  public static void loginFacebook() {\r\n        Locators.findElement(\"Xpath\", FaceLoginLocator.emailInputField).sendKeys(\"HolaCrayola\");\r\n    }\r\n\r\n\r\n  //  @Factory(dataProviderClass = ReaderExcelFiles.class, dataProvider = \"ExcelData\")\r\n    public static void Sheet1(String  username, String password) throws IOException {\r\n        Locators.findElement(\"Xpath\", FaceLoginLocator.emailInputField).sendKeys(username);\r\n        Locators.findElement(\"Xpath\", FaceLoginLocator.passwordInputField).sendKeys(password);\r\n\r\n    }\r\n\r\n    public static void Sheet2(String  username, String password){\r\n        Locators.findElement(\"Xpath\", FaceLoginLocator.emailInputField).sendKeys(username);\r\n        Locators.findElement(\"Xpath\", FaceLoginLocator.passwordInputField).sendKeys(password);\r\n    }\r\n    public static void locatorNewStrategyFindBy() throws IllegalAccessException {\r\n        FacebookFindByLocators f = new FacebookFindByLocators(driver);\r\n        LocatorsFindBy lfby = new LocatorsFindBy();\r\n\r\n       lfby.findElementBy(f.getPasswordField()).sendKeys(\"Holaaaaaaa\");\r\n        lfby.findElementwithWait(lfby.getElements().getEmailTXT()).sendKeys(\"Hola\");\r\n    }\r\n\r\n\r\n}\r\n\r\n\r\n\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/test/java/pages/FacebookLoginPage.java b/src/test/java/pages/FacebookLoginPage.java
+--- a/src/test/java/pages/FacebookLoginPage.java	(revision 9a86ee27e22817af09a7305464da63958cb0f61c)
++++ b/src/test/java/pages/FacebookLoginPage.java	(date 1725338373511)
+@@ -13,7 +13,7 @@
+ public class FacebookLoginPage extends  BaseTest{
+ 
+ 
+-  public static void loginFacebook() {
++ /* public static void loginFacebook() {
+         Locators.findElement("Xpath", FaceLoginLocator.emailInputField).sendKeys("HolaCrayola");
+     }
+ 
+@@ -35,7 +35,7 @@
+ 
+        lfby.findElementBy(f.getPasswordField()).sendKeys("Holaaaaaaa");
+         lfby.findElementwithWait(lfby.getElements().getEmailTXT()).sendKeys("Hola");
+-    }
++    }*/
+ 
+ 
+ }
+Index: src/test/java/utilities/Locators.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package utilities;\r\n\r\n\r\nimport base.BaseTest;\r\nimport org.openqa.selenium.By;\r\nimport org.openqa.selenium.WebElement;\r\nimport org.openqa.selenium.support.ui.ExpectedConditions;\r\nimport org.openqa.selenium.support.ui.WebDriverWait;\r\n\r\nimport java.time.Duration;\r\nimport java.util.List;\r\n\r\npublic class Locators extends BaseTest {\r\n\r\n    static WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));\r\n\r\n    public static WebElement findElement(String elementType, String elementValue) {\r\n        if (elementType.equalsIgnoreCase(\"Xpath\")) {\r\n            return driver.findElement(By.xpath(elementValue));\r\n        } else if (elementType.equalsIgnoreCase(\"Css\")) {\r\n            return driver.findElement(By.cssSelector(elementValue));\r\n        } else if (elementType.equalsIgnoreCase(\"ID\")) {\r\n            return driver.findElement(By.id(elementValue));\r\n        } else if (elementType.equalsIgnoreCase(\"ClassName\")) {\r\n            return driver.findElement(By.className(elementValue));\r\n        } else if (elementType.equalsIgnoreCase(\"LinkText\")) {\r\n            return driver.findElement(By.linkText(elementValue));\r\n        } else if (elementType.equalsIgnoreCase(\"PartialLinkText\")) {\r\n            return driver.findElement(By.partialLinkText(elementValue));\r\n        } else {\r\n            System.out.println(\"No Locator\");\r\n            return null;\r\n        }\r\n    }\r\n\r\n    public static List<WebElement> findElementS(String elementType, String elementValue) {\r\n        if (elementType.equalsIgnoreCase(\"Xpath\")) {\r\n            return driver.findElements(By.xpath(elementValue));\r\n        } else if (elementType.equalsIgnoreCase(\"Css\")) {\r\n            return driver.findElements(By.cssSelector(elementValue));\r\n        } else if (elementType.equalsIgnoreCase(\"ID\")) {\r\n            return driver.findElements(By.id(elementValue));\r\n        } else if (elementType.equalsIgnoreCase(\"ClassName\")) {\r\n            return driver.findElements(By.className(elementValue));\r\n        } else if (elementType.equalsIgnoreCase(\"LinkText\")) {\r\n            return driver.findElements(By.linkText(elementValue));\r\n        } else if (elementType.equalsIgnoreCase(\"PartialLinkText\")) {\r\n            return driver.findElements(By.partialLinkText(elementValue));\r\n        } else {\r\n            System.out.println(\"No Locator\");\r\n            return null;\r\n        }\r\n    }\r\n\r\n    public static WebElement findElementWithWait(String elementType, String elementValue) {\r\n\r\n        if (elementType.equalsIgnoreCase(\"Xpath\")) {\r\n            return wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(elementValue)));\r\n        } else if (elementType.equalsIgnoreCase(\"Css\")) {\r\n            return wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(elementValue)));\r\n        } else if (elementType.equalsIgnoreCase(\"ID\")) {\r\n            return wait.until(ExpectedConditions.presenceOfElementLocated(By.id(elementValue)));\r\n        } else if (elementType.equalsIgnoreCase(\"ClassName\")) {\r\n            return wait.until(ExpectedConditions.presenceOfElementLocated(By.className(elementValue)));\r\n        } else if (elementType.equalsIgnoreCase(\"LinkText\")) {\r\n            return wait.until(ExpectedConditions.presenceOfElementLocated(By.linkText(elementValue)));\r\n        } else if (elementType.equalsIgnoreCase(\"PartialLinkText\")) {\r\n            return wait.until(ExpectedConditions.presenceOfElementLocated(By.partialLinkText(elementValue)));\r\n        } else {\r\n            System.out.println(\"No Locator\");\r\n            return null;\r\n        }\r\n\r\n\r\n    }\r\n\r\n    public static List<WebElement> findElementsWithWait(String elementType, String elementValue) {\r\n        if (elementType.equalsIgnoreCase(\"Xpath\")) {\r\n            return wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath(elementValue)));\r\n        } else if (elementType.equalsIgnoreCase(\"Css\")) {\r\n            return wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.cssSelector(elementValue)));\r\n        } else if (elementType.equalsIgnoreCase(\"ID\")) {\r\n            return wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id(elementValue)));\r\n        } else if (elementType.equalsIgnoreCase(\"ClassName\")) {\r\n            return wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.className(elementValue)));\r\n        } else if (elementType.equalsIgnoreCase(\"LinkText\")) {\r\n            return wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.linkText(elementValue)));\r\n        } else if (elementType.equalsIgnoreCase(\"PartialLinkText\")) {\r\n            return wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.partialLinkText(elementValue)));\r\n        } else {\r\n            System.out.println(\"No Locator\");\r\n            return null;\r\n        }\r\n\r\n\r\n\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/test/java/utilities/Locators.java b/src/test/java/utilities/Locators.java
+--- a/src/test/java/utilities/Locators.java	(revision 9a86ee27e22817af09a7305464da63958cb0f61c)
++++ b/src/test/java/utilities/Locators.java	(date 1725338236071)
+@@ -3,6 +3,7 @@
+ 
+ import base.BaseTest;
+ import org.openqa.selenium.By;
++import org.openqa.selenium.WebDriver;
+ import org.openqa.selenium.WebElement;
+ import org.openqa.selenium.support.ui.ExpectedConditions;
+ import org.openqa.selenium.support.ui.WebDriverWait;
+@@ -12,9 +13,15 @@
+ 
+ public class Locators extends BaseTest {
+ 
+-    static WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
++    private WebDriverWait wait;
++    private WebDriver driver;
+ 
+-    public static WebElement findElement(String elementType, String elementValue) {
++    public Locators(WebDriver driver) {
++        this.driver = driver;
++        wait = new WebDriverWait(driver, Duration.ofSeconds(5));
++    }
++
++    public  WebElement findElement(String elementType, String elementValue) {
+         if (elementType.equalsIgnoreCase("Xpath")) {
+             return driver.findElement(By.xpath(elementValue));
+         } else if (elementType.equalsIgnoreCase("Css")) {
+@@ -33,7 +40,7 @@
+         }
+     }
+ 
+-    public static List<WebElement> findElementS(String elementType, String elementValue) {
++    public  List<WebElement> findElementS(String elementType, String elementValue) {
+         if (elementType.equalsIgnoreCase("Xpath")) {
+             return driver.findElements(By.xpath(elementValue));
+         } else if (elementType.equalsIgnoreCase("Css")) {
+@@ -52,7 +59,7 @@
+         }
+     }
+ 
+-    public static WebElement findElementWithWait(String elementType, String elementValue) {
++    public  WebElement findElementWithWait(String elementType, String elementValue) {
+ 
+         if (elementType.equalsIgnoreCase("Xpath")) {
+             return wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(elementValue)));
+@@ -74,7 +81,7 @@
+ 
+     }
+ 
+-    public static List<WebElement> findElementsWithWait(String elementType, String elementValue) {
++    public  List<WebElement> findElementsWithWait(String elementType, String elementValue) {
+         if (elementType.equalsIgnoreCase("Xpath")) {
+             return wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath(elementValue)));
+         } else if (elementType.equalsIgnoreCase("Css")) {
+@@ -93,6 +100,5 @@
+         }
+ 
+ 
+-
+     }
+ }
+\ No newline at end of file
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"493da8ae-d6cf-4110-a407-38b876a7b056\" name=\"Changes\" comment=\"Hola\">\r\n      <change afterPath=\"$PROJECT_DIR$/src/test/java/base/DriverFatory_Logic_Thread.java\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/src/test/java/base/ExtentTestFactoryThread.java\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/src/test/java/locators/FacebookFindByLocators.java\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/src/test/java/utilities/LocatorSpecified___FindBy.java\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/src/test/java/utilities/LocatorsFindBy.java\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/src/test/java/utilities/PropertiesReader.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/test/java/base/BaseTest.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/test/java/base/BaseTest.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/test/java/locators/FaceLoginLocator.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/test/java/locators/FaceLoginLocator.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/test/java/pages/FacebookLoginPage.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/test/java/pages/FacebookLoginPage.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/test/java/testCases/Test1.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/test/java/testCases/Test1.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/test/java/utilities/ReaderExcelFiles.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/test/java/utilities/ReaderExcelFiles.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/test/java/utilities/RetryAnalyzer.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/test/java/utilities/RetryAnalyzer.java\" afterDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"FileTemplateManagerImpl\">\r\n    <option name=\"RECENT_TEMPLATES\">\r\n      <list>\r\n        <option value=\"Interface\" />\r\n        <option value=\"Class\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n  </component>\r\n  <component name=\"GitHubPullRequestSearchHistory\">{\r\n  &quot;lastFilter&quot;: {\r\n    &quot;state&quot;: &quot;OPEN&quot;,\r\n    &quot;assignee&quot;: &quot;Ilesthg&quot;\r\n  }\r\n}</component>\r\n  <component name=\"GithubPullRequestsUISettings\">\r\n    <option name=\"selectedUrlAndAccountId\">\r\n      <UrlAndAccount>\r\n        <option name=\"accountId\" value=\"e3933b7b-06aa-4545-97f5-39652b180c81\" />\r\n        <option name=\"url\" value=\"https://github.com/Ilesthg/SeleniumWF.git\" />\r\n      </UrlAndAccount>\r\n    </option>\r\n  </component>\r\n  <component name=\"ProjectColorInfo\">{\r\n  &quot;associatedIndex&quot;: 5\r\n}</component>\r\n  <component name=\"ProjectId\" id=\"2hRuE6pJsfCfCxvfNFPGYmzeyu1\" />\r\n  <component name=\"ProjectLevelVcsManager\" settingsEditedManually=\"true\" />\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\">{\r\n  &quot;keyToString&quot;: {\r\n    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,\r\n    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,\r\n    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,\r\n    &quot;git-widget-placeholder&quot;: &quot;main&quot;\r\n  }\r\n}</component>\r\n  <component name=\"RecentsManager\">\r\n    <key name=\"MoveFile.RECENT_KEYS\">\r\n      <recent name=\"C:\\Users\\j\\IdeaProjects\\SeleniumFramework\\TestFrameworkSelenium\\src\\test\\resources\" />\r\n      <recent name=\"C:\\Users\\j\\IdeaProjects\\SeleniumFramework\\TestFrameworkSelenium\\src\\test\\configFiles\" />\r\n    </key>\r\n    <key name=\"CopyClassDialog.RECENTS_KEY\">\r\n      <recent name=\"utilities\" />\r\n    </key>\r\n  </component>\r\n  <component name=\"RunManager\" selected=\"TestNG.Test1.testFindByLocators\">\r\n    <configuration name=\"C:/Users/j/IdeaProjects/SeleniumFramework/TestFrameworkSelenium/testng.xml\" type=\"TestNG\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <module name=\"TestFrameworkSelenium\" />\r\n      <option name=\"SUITE_NAME\" value=\"$PROJECT_DIR$/testng.xml\" />\r\n      <option name=\"TEST_OBJECT\" value=\"SUITE\" />\r\n      <properties />\r\n      <listeners />\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <configuration name=\"Cases2.test1\" type=\"TestNG\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <module name=\"TestFrameworkSelenium\" />\r\n      <extension name=\"coverage\">\r\n        <pattern>\r\n          <option name=\"PATTERN\" value=\"testCases.*\" />\r\n          <option name=\"ENABLED\" value=\"true\" />\r\n        </pattern>\r\n      </extension>\r\n      <option name=\"PACKAGE_NAME\" value=\"testCases\" />\r\n      <option name=\"MAIN_CLASS_NAME\" value=\"testCases.Cases2\" />\r\n      <option name=\"METHOD_NAME\" value=\"test1\" />\r\n      <option name=\"TEST_OBJECT\" value=\"METHOD\" />\r\n      <properties />\r\n      <listeners />\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <configuration name=\"Logic.loginFacebookMv1\" type=\"TestNG\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <module name=\"TestFrameworkSelenium\" />\r\n      <extension name=\"coverage\">\r\n        <pattern>\r\n          <option name=\"PATTERN\" value=\"pages.*\" />\r\n          <option name=\"ENABLED\" value=\"true\" />\r\n        </pattern>\r\n      </extension>\r\n      <option name=\"PACKAGE_NAME\" value=\"pages\" />\r\n      <option name=\"MAIN_CLASS_NAME\" value=\"pages.Logic\" />\r\n      <option name=\"METHOD_NAME\" value=\"loginFacebookMv1\" />\r\n      <option name=\"TEST_OBJECT\" value=\"METHOD\" />\r\n      <properties />\r\n      <listeners />\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <configuration name=\"Test1.gotoPage1\" type=\"TestNG\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <module name=\"TestFrameworkSelenium\" />\r\n      <extension name=\"coverage\">\r\n        <pattern>\r\n          <option name=\"PATTERN\" value=\"testCases.*\" />\r\n          <option name=\"ENABLED\" value=\"true\" />\r\n        </pattern>\r\n      </extension>\r\n      <option name=\"PACKAGE_NAME\" value=\"testCases\" />\r\n      <option name=\"MAIN_CLASS_NAME\" value=\"testCases.Test1\" />\r\n      <option name=\"METHOD_NAME\" value=\"gotoPage1\" />\r\n      <option name=\"TEST_OBJECT\" value=\"METHOD\" />\r\n      <properties />\r\n      <listeners />\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <configuration name=\"Test1.testFindByLocators\" type=\"TestNG\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <module name=\"TestFrameworkSelenium\" />\r\n      <extension name=\"coverage\">\r\n        <pattern>\r\n          <option name=\"PATTERN\" value=\"testCases.*\" />\r\n          <option name=\"ENABLED\" value=\"true\" />\r\n        </pattern>\r\n      </extension>\r\n      <option name=\"PACKAGE_NAME\" value=\"testCases\" />\r\n      <option name=\"MAIN_CLASS_NAME\" value=\"testCases.Test1\" />\r\n      <option name=\"METHOD_NAME\" value=\"testFindByLocators\" />\r\n      <option name=\"TEST_OBJECT\" value=\"METHOD\" />\r\n      <properties />\r\n      <listeners />\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <recent_temporary>\r\n      <list>\r\n        <item itemvalue=\"TestNG.Test1.testFindByLocators\" />\r\n        <item itemvalue=\"TestNG.C:/Users/j/IdeaProjects/SeleniumFramework/TestFrameworkSelenium/testng.xml\" />\r\n        <item itemvalue=\"TestNG.Cases2.test1\" />\r\n        <item itemvalue=\"TestNG.Logic.loginFacebookMv1\" />\r\n        <item itemvalue=\"TestNG.Test1.gotoPage1\" />\r\n      </list>\r\n    </recent_temporary>\r\n  </component>\r\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"493da8ae-d6cf-4110-a407-38b876a7b056\" name=\"Changes\" comment=\"\" />\r\n      <created>1717569098660</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1717569098660</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00001\" summary=\"Hola\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1717569819970</created>\r\n      <option name=\"number\" value=\"00001\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1717569819970</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00002\" summary=\"Hola\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1718085821852</created>\r\n      <option name=\"number\" value=\"00002\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00002\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1718085821852</updated>\r\n    </task>\r\n    <option name=\"localTasksCounter\" value=\"3\" />\r\n    <servers />\r\n  </component>\r\n  <component name=\"Vcs.Log.Tabs.Properties\">\r\n    <option name=\"TAB_STATES\">\r\n      <map>\r\n        <entry key=\"MAIN\">\r\n          <value>\r\n            <State>\r\n              <option name=\"FILTERS\">\r\n                <map>\r\n                  <entry key=\"branch\">\r\n                    <value>\r\n                      <list>\r\n                        <option value=\"main\" />\r\n                      </list>\r\n                    </value>\r\n                  </entry>\r\n                </map>\r\n              </option>\r\n            </State>\r\n          </value>\r\n        </entry>\r\n      </map>\r\n    </option>\r\n  </component>\r\n  <component name=\"VcsManagerConfiguration\">\r\n    <MESSAGE value=\"Hola\" />\r\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"Hola\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision 9a86ee27e22817af09a7305464da63958cb0f61c)
++++ b/.idea/workspace.xml	(date 1725338408393)
+@@ -5,19 +5,10 @@
+   </component>
+   <component name="ChangeListManager">
+     <list default="true" id="493da8ae-d6cf-4110-a407-38b876a7b056" name="Changes" comment="Hola">
+-      <change afterPath="$PROJECT_DIR$/src/test/java/base/DriverFatory_Logic_Thread.java" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/test/java/base/ExtentTestFactoryThread.java" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/test/java/locators/FacebookFindByLocators.java" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/test/java/utilities/LocatorSpecified___FindBy.java" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/test/java/utilities/LocatorsFindBy.java" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/test/java/utilities/PropertiesReader.java" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/test/java/base/BaseTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/base/BaseTest.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/test/java/locators/FaceLoginLocator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/locators/FaceLoginLocator.java" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/src/test/java/pages/FacebookLoginPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/pages/FacebookLoginPage.java" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/src/test/java/testCases/Test1.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/testCases/Test1.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/test/java/utilities/ReaderExcelFiles.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/utilities/ReaderExcelFiles.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/test/java/utilities/RetryAnalyzer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/utilities/RetryAnalyzer.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/test/java/utilities/Locators.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/utilities/Locators.java" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+@@ -75,7 +66,7 @@
+       <recent name="utilities" />
+     </key>
+   </component>
+-  <component name="RunManager" selected="TestNG.Test1.testFindByLocators">
++  <component name="RunManager" selected="TestNG.FacebookLoginPage2">
+     <configuration name="C:/Users/j/IdeaProjects/SeleniumFramework/TestFrameworkSelenium/testng.xml" type="TestNG" temporary="true" nameIsGenerated="true">
+       <module name="TestFrameworkSelenium" />
+       <option name="SUITE_NAME" value="$PROJECT_DIR$/testng.xml" />
+@@ -104,7 +95,7 @@
+         <option name="Make" enabled="true" />
+       </method>
+     </configuration>
+-    <configuration name="Logic.loginFacebookMv1" type="TestNG" temporary="true" nameIsGenerated="true">
++    <configuration name="FacebookLoginPage2" type="TestNG" temporary="true" nameIsGenerated="true">
+       <module name="TestFrameworkSelenium" />
+       <extension name="coverage">
+         <pattern>
+@@ -113,26 +104,25 @@
+         </pattern>
+       </extension>
+       <option name="PACKAGE_NAME" value="pages" />
+-      <option name="MAIN_CLASS_NAME" value="pages.Logic" />
+-      <option name="METHOD_NAME" value="loginFacebookMv1" />
+-      <option name="TEST_OBJECT" value="METHOD" />
++      <option name="MAIN_CLASS_NAME" value="pages.FacebookLoginPage2" />
++      <option name="TEST_OBJECT" value="CLASS" />
+       <properties />
+       <listeners />
+       <method v="2">
+         <option name="Make" enabled="true" />
+       </method>
+     </configuration>
+-    <configuration name="Test1.gotoPage1" type="TestNG" temporary="true" nameIsGenerated="true">
++    <configuration name="Logic.loginFacebookMv1" type="TestNG" temporary="true" nameIsGenerated="true">
+       <module name="TestFrameworkSelenium" />
+       <extension name="coverage">
+         <pattern>
+-          <option name="PATTERN" value="testCases.*" />
++          <option name="PATTERN" value="pages.*" />
+           <option name="ENABLED" value="true" />
+         </pattern>
+       </extension>
+-      <option name="PACKAGE_NAME" value="testCases" />
+-      <option name="MAIN_CLASS_NAME" value="testCases.Test1" />
+-      <option name="METHOD_NAME" value="gotoPage1" />
++      <option name="PACKAGE_NAME" value="pages" />
++      <option name="MAIN_CLASS_NAME" value="pages.Logic" />
++      <option name="METHOD_NAME" value="loginFacebookMv1" />
+       <option name="TEST_OBJECT" value="METHOD" />
+       <properties />
+       <listeners />
+@@ -160,11 +150,11 @@
+     </configuration>
+     <recent_temporary>
+       <list>
++        <item itemvalue="TestNG.FacebookLoginPage2" />
+         <item itemvalue="TestNG.Test1.testFindByLocators" />
+         <item itemvalue="TestNG.C:/Users/j/IdeaProjects/SeleniumFramework/TestFrameworkSelenium/testng.xml" />
+         <item itemvalue="TestNG.Cases2.test1" />
+         <item itemvalue="TestNG.Logic.loginFacebookMv1" />
+-        <item itemvalue="TestNG.Test1.gotoPage1" />
+       </list>
+     </recent_temporary>
+   </component>

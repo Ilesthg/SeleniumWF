@@ -1,0 +1,598 @@
+Index: src/test/java/pages/FacebookLoginPage.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package pages;\r\n\r\nimport base.BaseTest;\r\nimport locators.FaceLoginLocator;\r\nimport utilities.Locators;\r\nimport utilities.ReaderExcelFiles;\r\n\r\nimport java.io.IOException;\r\n\r\npublic class FacebookLoginPage extends BaseTest {\r\n\r\n    public static void loginFacebook(){\r\n        Locators.findElement(\"Xpath\", FaceLoginLocator.emailInputField).sendKeys(\"Hola\");\r\n    }\r\n\r\n    public void readDataExcel_andUser(String username, String password) throws IOException {\r\n        ReaderExcelFiles.readExcel();\r\n    }\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/test/java/pages/FacebookLoginPage.java b/src/test/java/pages/FacebookLoginPage.java
+--- a/src/test/java/pages/FacebookLoginPage.java	
++++ b/src/test/java/pages/FacebookLoginPage.java	
+@@ -1,20 +1,54 @@
+ package pages;
+ 
+ import base.BaseTest;
++import base.BaseTestParallel;
++import base.DriverFactoryParallel;
++import base.TestDataParallel;
+ import locators.FaceLoginLocator;
++import org.testng.annotations.Test;
+ import utilities.Locators;
+ import utilities.ReaderExcelFiles;
+ 
+ import java.io.IOException;
++import java.util.HashMap;
+ 
+-public class FacebookLoginPage extends BaseTest {
++public class FacebookLoginPage extends BaseTestParallel {
++    Locators lc;
+ 
+-    public static void loginFacebook(){
+-        Locators.findElement("Xpath", FaceLoginLocator.emailInputField).sendKeys("Hola");
++    @Test
++    public void testSomething(){
++        System.out.println("testSomething111");
++    }
++    @Test
++    public void testSomething2(){
++        System.out.println("testSomething22");
++    }
++    @Test
++    public void testSomething3(){
++        System.out.println("testSomething33");
++    }
++    @Test
++    public void testSomething4(){
++        System.out.println("testSomething444");
+     }
+ 
+-    public void readDataExcel_andUser(String username, String password) throws IOException {
+-        ReaderExcelFiles.readExcel();
++@Test(dataProviderClass = ReaderExcelFiles.class, dataProvider = "Data")
++    public  void loginFacebook(Object obj){
++    lc = new Locators(DriverFactoryParallel.getInstance().getDriver());
++         HashMap<String, String> testData = (HashMap<String, String>) obj;
++
++    TestDataParallel.getInstance().setTestDataParallel(testData);
++
++    lc.findElement("Xpath", FaceLoginLocator.emailInputField).sendKeys(testData.get("Username"));
++    lc.findElement("Xpath", FaceLoginLocator.passwordInputField).sendKeys(testData.get("Password"));
++    //lc.findElement("Xpath", FaceLoginLocator.passwordInputField).sendKeys(testData.get("Test"));
++       // lc.findElement("Xpath", FaceLoginLocator.emailInputField).sendKeys("Hola");
+     }
++/*    @Test(dataProviderClass = ReaderExcelFiles.class, dataProvider = "lol")
++    public void readDataExcel_andUser(String username, String password, String a) throws IOException {
++        lc = new Locators(DriverFactoryParallel.getInstance().getDriver());
++        lc.findElement("Xpath", FaceLoginLocator.emailInputField).sendKeys(username);
++
++    }*/
+ 
+ }
+Index: src/test/java/utilities/Locators.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package utilities;\r\n\r\n\r\nimport base.BaseTest;\r\nimport org.openqa.selenium.By;\r\nimport org.openqa.selenium.WebElement;\r\nimport org.openqa.selenium.support.ui.ExpectedConditions;\r\nimport org.openqa.selenium.support.ui.WebDriverWait;\r\n\r\nimport java.time.Duration;\r\nimport java.util.List;\r\n\r\npublic class Locators extends BaseTest {\r\n\r\n    static WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));\r\n\r\n    public static WebElement findElement(String elementType, String elementValue) {\r\n        if (elementType.equalsIgnoreCase(\"Xpath\")) {\r\n            return driver.findElement(By.xpath(elementValue));\r\n        } else if (elementType.equalsIgnoreCase(\"Css\")) {\r\n            return driver.findElement(By.cssSelector(elementValue));\r\n        } else if (elementType.equalsIgnoreCase(\"ID\")) {\r\n            return driver.findElement(By.id(elementValue));\r\n        } else if (elementType.equalsIgnoreCase(\"ClassName\")) {\r\n            return driver.findElement(By.className(elementValue));\r\n        } else if (elementType.equalsIgnoreCase(\"LinkText\")) {\r\n            return driver.findElement(By.linkText(elementValue));\r\n        } else if (elementType.equalsIgnoreCase(\"PartialLinkText\")) {\r\n            return driver.findElement(By.partialLinkText(elementValue));\r\n        } else {\r\n            System.out.println(\"No Locator\");\r\n            return null;\r\n        }\r\n    }\r\n\r\n    public static List<WebElement> findElementS(String elementType, String elementValue) {\r\n        if (elementType.equalsIgnoreCase(\"Xpath\")) {\r\n            return driver.findElements(By.xpath(elementValue));\r\n        } else if (elementType.equalsIgnoreCase(\"Css\")) {\r\n            return driver.findElements(By.cssSelector(elementValue));\r\n        } else if (elementType.equalsIgnoreCase(\"ID\")) {\r\n            return driver.findElements(By.id(elementValue));\r\n        } else if (elementType.equalsIgnoreCase(\"ClassName\")) {\r\n            return driver.findElements(By.className(elementValue));\r\n        } else if (elementType.equalsIgnoreCase(\"LinkText\")) {\r\n            return driver.findElements(By.linkText(elementValue));\r\n        } else if (elementType.equalsIgnoreCase(\"PartialLinkText\")) {\r\n            return driver.findElements(By.partialLinkText(elementValue));\r\n        } else {\r\n            System.out.println(\"No Locator\");\r\n            return null;\r\n        }\r\n    }\r\n\r\n    public static WebElement findElementWithWait(String elementType, String elementValue) {\r\n\r\n        if (elementType.equalsIgnoreCase(\"Xpath\")) {\r\n            return wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(elementValue)));\r\n        } else if (elementType.equalsIgnoreCase(\"Css\")) {\r\n            return wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(elementValue)));\r\n        } else if (elementType.equalsIgnoreCase(\"ID\")) {\r\n            return wait.until(ExpectedConditions.presenceOfElementLocated(By.id(elementValue)));\r\n        } else if (elementType.equalsIgnoreCase(\"ClassName\")) {\r\n            return wait.until(ExpectedConditions.presenceOfElementLocated(By.className(elementValue)));\r\n        } else if (elementType.equalsIgnoreCase(\"LinkText\")) {\r\n            return wait.until(ExpectedConditions.presenceOfElementLocated(By.linkText(elementValue)));\r\n        } else if (elementType.equalsIgnoreCase(\"PartialLinkText\")) {\r\n            return wait.until(ExpectedConditions.presenceOfElementLocated(By.partialLinkText(elementValue)));\r\n        } else {\r\n            System.out.println(\"No Locator\");\r\n            return null;\r\n        }\r\n\r\n\r\n    }\r\n\r\n    public static List<WebElement> findElementsWithWait(String elementType, String elementValue) {\r\n        if (elementType.equalsIgnoreCase(\"Xpath\")) {\r\n            return wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath(elementValue)));\r\n        } else if (elementType.equalsIgnoreCase(\"Css\")) {\r\n            return wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.cssSelector(elementValue)));\r\n        } else if (elementType.equalsIgnoreCase(\"ID\")) {\r\n            return wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id(elementValue)));\r\n        } else if (elementType.equalsIgnoreCase(\"ClassName\")) {\r\n            return wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.className(elementValue)));\r\n        } else if (elementType.equalsIgnoreCase(\"LinkText\")) {\r\n            return wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.linkText(elementValue)));\r\n        } else if (elementType.equalsIgnoreCase(\"PartialLinkText\")) {\r\n            return wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.partialLinkText(elementValue)));\r\n        } else {\r\n            System.out.println(\"No Locator\");\r\n            return null;\r\n        }\r\n\r\n\r\n\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/test/java/utilities/Locators.java b/src/test/java/utilities/Locators.java
+--- a/src/test/java/utilities/Locators.java	
++++ b/src/test/java/utilities/Locators.java	
+@@ -3,6 +3,7 @@
+ 
+ import base.BaseTest;
+ import org.openqa.selenium.By;
++import org.openqa.selenium.WebDriver;
+ import org.openqa.selenium.WebElement;
+ import org.openqa.selenium.support.ui.ExpectedConditions;
+ import org.openqa.selenium.support.ui.WebDriverWait;
+@@ -10,11 +11,18 @@
+ import java.time.Duration;
+ import java.util.List;
+ 
+-public class Locators extends BaseTest {
++public class Locators {
++
++    private WebDriver driver;
++    private WebDriverWait wait;
+ 
+-    static WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
++    public Locators(WebDriver driver){
++       this.driver = driver;
++        wait = new WebDriverWait(driver, Duration.ofSeconds(5));
++    }
+ 
+-    public static WebElement findElement(String elementType, String elementValue) {
++
++    public  WebElement findElement(String elementType, String elementValue) {
+         if (elementType.equalsIgnoreCase("Xpath")) {
+             return driver.findElement(By.xpath(elementValue));
+         } else if (elementType.equalsIgnoreCase("Css")) {
+@@ -33,7 +41,7 @@
+         }
+     }
+ 
+-    public static List<WebElement> findElementS(String elementType, String elementValue) {
++    public  List<WebElement> findElementS(String elementType, String elementValue) {
+         if (elementType.equalsIgnoreCase("Xpath")) {
+             return driver.findElements(By.xpath(elementValue));
+         } else if (elementType.equalsIgnoreCase("Css")) {
+@@ -52,7 +60,7 @@
+         }
+     }
+ 
+-    public static WebElement findElementWithWait(String elementType, String elementValue) {
++    public  WebElement findElementWithWait(String elementType, String elementValue) {
+ 
+         if (elementType.equalsIgnoreCase("Xpath")) {
+             return wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(elementValue)));
+@@ -74,7 +82,7 @@
+ 
+     }
+ 
+-    public static List<WebElement> findElementsWithWait(String elementType, String elementValue) {
++    public  List<WebElement> findElementsWithWait(String elementType, String elementValue) {
+         if (elementType.equalsIgnoreCase("Xpath")) {
+             return wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath(elementValue)));
+         } else if (elementType.equalsIgnoreCase("Css")) {
+Index: src/test/java/utilities/takeSS.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package utilities;\r\n\r\n\r\nimport base.BaseTest;\r\nimport org.apache.commons.io.FileUtils;\r\nimport org.openqa.selenium.OutputType;\r\nimport org.openqa.selenium.TakesScreenshot;\r\nimport org.testng.ITestResult;\r\n\r\nimport java.io.File;\r\nimport java.io.IOException;\r\n\r\npublic  class takeSS  extends BaseTest {\r\n\r\n    public static void takeScreenS(ITestResult result) throws IOException {\r\n        String FileName = System.getProperty(\"user.dir\") + File.separator + \"src/test/resources/screenshots\" + result.getMethod().getMethodName();\r\n        File ss = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);\r\n        FileUtils.copyFile(ss , new File(FileName+ \".png\"));\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/test/java/utilities/takeSS.java b/src/test/java/utilities/takeSS.java
+--- a/src/test/java/utilities/takeSS.java	
++++ b/src/test/java/utilities/takeSS.java	
+@@ -5,14 +5,20 @@
+ import org.apache.commons.io.FileUtils;
+ import org.openqa.selenium.OutputType;
+ import org.openqa.selenium.TakesScreenshot;
++import org.openqa.selenium.WebDriver;
++import org.openqa.selenium.support.ui.WebDriverWait;
+ import org.testng.ITestResult;
+ 
+ import java.io.File;
+ import java.io.IOException;
+ 
+ public  class takeSS  extends BaseTest {
++private WebDriver driver;
++    public takeSS(WebDriver driver){
++        this.driver = driver;
++    }
+ 
+-    public static void takeScreenS(ITestResult result) throws IOException {
++    public  void takeScreenS(ITestResult result) throws IOException {
+         String FileName = System.getProperty("user.dir") + File.separator + "src/test/resources/screenshots" + result.getMethod().getMethodName();
+         File ss = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+         FileUtils.copyFile(ss , new File(FileName+ ".png"));
+Index: src/test/java/testCases/Test1.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>\r\n\r\npackage testCases;\r\n\r\nimport base.BaseTest;\r\nimport org.testng.annotations.Test;\r\nimport pages.FacebookLoginPage;\r\n\r\npublic class Test1 extends BaseTest {\r\n\r\n    @Test\r\n    public void gotoPage() {\r\n        FacebookLoginPage.loginFacebook();\r\n    }\r\n    @Test\r\n    public void test2() {\r\n\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/test/java/testCases/Test1.java b/src/test/java/testCases/Test1.java
+--- a/src/test/java/testCases/Test1.java	
++++ b/src/test/java/testCases/Test1.java	
+@@ -10,7 +10,7 @@
+ 
+     @Test
+     public void gotoPage() {
+-        FacebookLoginPage.loginFacebook();
++       // FacebookLoginPage.loginFacebook();
+     }
+     @Test
+     public void test2() {
+Index: src/test/java/base/BaseTest.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package base;\r\n\r\nimport com.aventstack.extentreports.ExtentReports;\r\nimport com.aventstack.extentreports.ExtentTest;\r\nimport com.aventstack.extentreports.Status;\r\nimport com.aventstack.extentreports.markuputils.ExtentColor;\r\nimport com.aventstack.extentreports.markuputils.MarkupHelper;\r\nimport com.aventstack.extentreports.reporter.ExtentSparkReporter;\r\nimport com.aventstack.extentreports.reporter.configuration.Theme;\r\nimport io.github.bonigarcia.wdm.WebDriverManager;\r\nimport org.openqa.selenium.WebDriver;\r\nimport org.openqa.selenium.chrome.ChromeDriver;\r\nimport org.openqa.selenium.edge.EdgeDriver;\r\nimport org.openqa.selenium.firefox.FirefoxDriver;\r\nimport org.testng.ITestResult;\r\nimport org.testng.annotations.*;\r\n\r\nimport java.io.FileReader;\r\nimport java.io.IOException;\r\nimport java.lang.reflect.Method;\r\nimport java.time.Duration;\r\nimport java.util.Properties;\r\n\r\npublic class BaseTest {\r\n\r\n    public static WebDriver driver;\r\n    public ExtentSparkReporter sparkReporter;\r\n    public ExtentReports extent;\r\n    public ExtentTest logger;\r\n    private final String routeDir = System.getProperty(\"user.dir\");\r\n    private String browser, url;\r\n\r\n    FileReader fr;\r\n    Properties prop = new Properties();\r\n\r\n\r\n    @BeforeSuite\r\n    public void initDriver() throws IOException {\r\n        System.out.println(\"Initialazing Driver and Reading properties file\");\r\n\r\n        if (driver == null) {\r\n            fr = new FileReader(routeDir + \"/src/test/resources/configFiles/data.properties\");\r\n            prop.load(fr);\r\n        }\r\n        browser = prop.getProperty(\"browser\");\r\n        url = prop.getProperty(\"url\");\r\n    }\r\n\r\n\r\n\r\n    @BeforeTest\r\n    public void beforeTestMethod() {\r\n        //System.out.println(System.getProperty(\"user.dir\") + File.separator + \"src/test/resources/reports\" + File.separator + \"SDTE.html\");\r\n        //sparkReporter = new ExtentSparkReporter(System.getProperty(\"user.dir\") + File.separator + \"/src/test/resources/reports\" + File.separator + \"SDTE.html\");\r\n        sparkReporter = new ExtentSparkReporter(routeDir + \"/src/test/resources/reports/SDTE.html\");\r\n        extent = new ExtentReports();\r\n        extent.attachReporter(sparkReporter);\r\n        sparkReporter.config().setTheme(Theme.DARK);\r\n        extent.setSystemInfo(\"Hostname\", \"RHEL8\");\r\n        extent.setSystemInfo(\"Username\", \"root\");\r\n        sparkReporter.config().setDocumentTitle(\"Automation Report\");\r\n        sparkReporter.config().setReportName(\"Atiomation Test results\");\r\n    }\r\n\r\n\r\n\r\n    @BeforeMethod\r\n    public void beforeMethod(Method testMethod) {\r\n        logger = extent.createTest(testMethod.getName());\r\n        setupDriver();\r\n        driver.get(url);\r\n        driver.manage().window().maximize();\r\n        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));\r\n    }\r\n\r\n\r\n\r\n    @AfterMethod\r\n    public void afterMethod(ITestResult result) {\r\n        if (result.getStatus() == ITestResult.FAILURE) {\r\n            logger.log(Status.FAIL, MarkupHelper.createLabel(result.getName() + \" - Test case failed\", ExtentColor.RED));\r\n            logger.log(Status.FAIL, MarkupHelper.createLabel(result.getThrowable() + \" - Test case failed\", ExtentColor.RED));\r\n        } else if (result.getStatus() == ITestResult.SKIP) {\r\n            logger.log(Status.SKIP, MarkupHelper.createLabel(result.getName() + \" - Test case Skipped\", ExtentColor.ORANGE));\r\n        } else if (result.getStatus() == ITestResult.SUCCESS) {\r\n            logger.log(Status.PASS, MarkupHelper.createLabel(result.getName() + \" - Test case SUCCESS\", ExtentColor.GREEN));\r\n        }\r\n        driver.quit();\r\n    }\r\n\r\n\r\n\r\n    @AfterTest\r\n    public void afterTest() {\r\n        extent.flush();\r\n    }\r\n\r\n\r\n    @AfterSuite\r\n    public void closeDriver() {\r\n        System.out.println(\"Closing Driver\");\r\n        //   driver.close();\r\n    }\r\n\r\n\r\n    public void setupDriver() {\r\n        if (browser.equalsIgnoreCase(\"Chrome\")) {\r\n            WebDriverManager.chromedriver().setup();\r\n            driver = new ChromeDriver();\r\n            //Redirecting to URL\r\n            driver.get(url);\r\n\r\n        } else if (prop.getProperty(\"browser\").equalsIgnoreCase(\"Firefox\")) {\r\n            WebDriverManager.firefoxdriver().setup();\r\n            driver = new FirefoxDriver();\r\n            driver.get(url);\r\n        } else if (prop.getProperty(\"browser\").equalsIgnoreCase(\"Edge\")) {\r\n            WebDriverManager.edgedriver().setup();\r\n            driver = new EdgeDriver();\r\n            driver.get(url);\r\n        }\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/test/java/base/BaseTest.java b/src/test/java/base/BaseTest.java
+--- a/src/test/java/base/BaseTest.java	
++++ b/src/test/java/base/BaseTest.java	
+@@ -23,7 +23,7 @@
+ 
+ public class BaseTest {
+ 
+-    public static WebDriver driver;
++    private   WebDriver driver;
+     public ExtentSparkReporter sparkReporter;
+     public ExtentReports extent;
+     public ExtentTest logger;
+@@ -85,7 +85,7 @@
+         } else if (result.getStatus() == ITestResult.SUCCESS) {
+             logger.log(Status.PASS, MarkupHelper.createLabel(result.getName() + " - Test case SUCCESS", ExtentColor.GREEN));
+         }
+-        driver.quit();
++     //   driver.quit();
+     }
+ 
+ 
+@@ -102,6 +102,9 @@
+         //   driver.close();
+     }
+ 
++    public WebDriver getDriver(){
++        return driver;
++    }
+ 
+     public void setupDriver() {
+         if (browser.equalsIgnoreCase("Chrome")) {
+Index: src/test/java/utilities/ReaderExcelFiles.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package utilities;\r\n\r\nimport org.apache.poi.ss.usermodel.*;\r\nimport org.testng.annotations.Test;\r\n\r\nimport java.io.File;\r\nimport java.io.FileInputStream;\r\nimport java.io.IOException;\r\n\r\n\r\npublic class ReaderExcelFiles {\r\n    static String routeDir = System.getProperty(\"user.dir\");\r\n\r\n    @Test\r\n    public static void readExcel() throws IOException {\r\n        //System.out.println(routeDir + \"/src/test/resources/testData/dataExcelSheet.xlsx\");\r\n\r\n        File file = new File(routeDir + \"/src/test/resources/testData/dataExcelSheet.xlsx\");\r\n        FileInputStream fileInputStream = new FileInputStream(file);\r\n\r\n        Workbook wb = WorkbookFactory.create(fileInputStream);\r\n        Sheet sheet = wb.getSheet(\"Sheet1\");\r\n\r\n\r\n        //From Sheet we can obtain the Total Number of Rows\r\n        int totalRows = sheet.getPhysicalNumberOfRows();\r\n        System.out.println(totalRows);\r\n        //To get Total Number of Columns, we need to select one Row and see how many columns it has,\r\n        // to do this from Sheet, you select one row with index\r\n        Row row = sheet.getRow(1);\r\n        int totalColumns = row.getPhysicalNumberOfCells();\r\n        System.out.println(totalColumns);\r\n\r\n/*\r\n        for (int i = 1; i <= totalRows; i++) {\r\n            String userName = sheet.getRow(i).getCell(0).getStringCellValue();\r\n            System.out.println(userName);\r\n\r\n            String password = sheet.getRow(i).getCell(1).getStringCellValue();\r\n            System.out.println(password);\r\n\r\n\r\n        }\r\n*/\r\n\r\n\r\n        DataFormatter dataFormatter = new DataFormatter();\r\n        String testData[][] = new String[totalRows][totalColumns];\r\n        for (int i = 1; i < totalRows; i++) {\r\n            for (int j = 0; j < totalColumns; j++) {\r\n                 testData[i - 1][j] = dataFormatter.formatCellValue(sheet.getRow(i).getCell(j));\r\n                System.out.println(testData[i - 1][j] = dataFormatter.formatCellValue(sheet.getRow(i).getCell(j)));\r\n                //String userName = dataFormatter.formatCellValue(sheet.getRow(i).getCell(0));\r\n\r\n            }\r\n        }\r\n\r\n\r\n    }\r\n\r\n\r\n    //  return new Object[][];\r\n}\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/test/java/utilities/ReaderExcelFiles.java b/src/test/java/utilities/ReaderExcelFiles.java
+--- a/src/test/java/utilities/ReaderExcelFiles.java	
++++ b/src/test/java/utilities/ReaderExcelFiles.java	
+@@ -1,18 +1,67 @@
+ package utilities;
+ 
++import lombok.Data;
+ import org.apache.poi.ss.usermodel.*;
++import org.testng.annotations.DataProvider;
+ import org.testng.annotations.Test;
+ 
+ import java.io.File;
+ import java.io.FileInputStream;
+ import java.io.IOException;
++import java.util.HashMap;
+ 
+ 
+ public class ReaderExcelFiles {
+     static String routeDir = System.getProperty("user.dir");
+ 
+-    @Test
+-    public static void readExcel() throws IOException {
++    @DataProvider(name = "Data")
++    public Object[][] readExcel2(){
++
++
++        Workbook wb = null;
++        Sheet sh;
++       String filePath = null;
++        try {
++            filePath = System.getProperty("user.dir")+ "/src/test/resources/testData/dataExcelSheet.xlsx";
++            System.out.println(filePath);
++        } catch (Exception e) {
++            e.printStackTrace();
++        }
++        //open file - workbook
++        File testDataFile = new File(filePath);
++
++        try {
++            wb = WorkbookFactory.create(testDataFile);
++        } catch (Exception e) {
++            e.printStackTrace();
++        }
++
++        sh = wb.getSheet("Sheet1");
++        Object[][] obj = new Object[sh.getLastRowNum()][1];
++
++        for (int i = 1; i <= sh.getLastRowNum(); i++) {
++            HashMap<String, String> hm = new HashMap<String, String>();
++            for (int j = 0; j < sh.getRow(0).getLastCellNum(); j++) {
++                String value;
++                if(sh.getRow(i).getCell(j) != null) {
++                    sh.getRow(i).getCell(j).setCellType(CellType.STRING);
++                    value = sh.getRow(i).getCell(j).toString();
++                }
++                else {
++                    value = "";
++                }
++                hm.put(sh.getRow(0).getCell(j).toString(), value);
++
++            }
++            obj[i-1][0] = hm;
++        }
++
++
++return  obj;
++    }
++
++    @DataProvider(name = "lol")
++    public static Object[][] readExcel() throws IOException {
+         //System.out.println(routeDir + "/src/test/resources/testData/dataExcelSheet.xlsx");
+ 
+         File file = new File(routeDir + "/src/test/resources/testData/dataExcelSheet.xlsx");
+@@ -23,7 +72,7 @@
+ 
+ 
+         //From Sheet we can obtain the Total Number of Rows
+-        int totalRows = sheet.getPhysicalNumberOfRows();
++        int totalRows = sheet.getLastRowNum();
+         System.out.println(totalRows);
+         //To get Total Number of Columns, we need to select one Row and see how many columns it has,
+         // to do this from Sheet, you select one row with index
+@@ -31,22 +80,9 @@
+         int totalColumns = row.getPhysicalNumberOfCells();
+         System.out.println(totalColumns);
+ 
+-/*
+-        for (int i = 1; i <= totalRows; i++) {
+-            String userName = sheet.getRow(i).getCell(0).getStringCellValue();
+-            System.out.println(userName);
+-
+-            String password = sheet.getRow(i).getCell(1).getStringCellValue();
+-            System.out.println(password);
+-
+-
+-        }
+-*/
+-
+-
+         DataFormatter dataFormatter = new DataFormatter();
+         String testData[][] = new String[totalRows][totalColumns];
+-        for (int i = 1; i < totalRows; i++) {
++        for (int i = 1; i <= totalRows; i++) {
+             for (int j = 0; j < totalColumns; j++) {
+                  testData[i - 1][j] = dataFormatter.formatCellValue(sheet.getRow(i).getCell(j));
+                 System.out.println(testData[i - 1][j] = dataFormatter.formatCellValue(sheet.getRow(i).getCell(j)));
+@@ -55,10 +91,9 @@
+             }
+         }
+ 
+-
+-    }
++      return testData;
++}
+ 
+ 
+-    //  return new Object[][];
+-}
++     }
+ 
+Index: src/test/java/utilities/Listener.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package utilities;\r\n\r\nimport org.testng.IAnnotationTransformer;\r\nimport org.testng.ITestListener;\r\nimport org.testng.ITestResult;\r\nimport org.testng.annotations.ITestAnnotation;\r\n\r\nimport java.io.IOException;\r\nimport java.lang.reflect.Constructor;\r\nimport java.lang.reflect.Method;\r\npublic class Listener  implements ITestListener, IAnnotationTransformer {\r\n    @Override\r\n    public void transform(ITestAnnotation annotation, Class testClass, Constructor testConstructor, Method testMethod) {\r\n        IAnnotationTransformer.super.transform(annotation, testClass, testConstructor, testMethod);\r\n        annotation.setRetryAnalyzer(RetryAnalyzer.class);\r\n    }\r\n    @Override\r\n    public void onTestFailure(ITestResult result) {\r\n        ITestListener.super.onTestFailure(result);\r\n        try {\r\n            takeSS.takeScreenS(result);\r\n        } catch (IOException e) {\r\n            throw new RuntimeException(e);\r\n        }\r\n\r\n\r\n    }\r\n\r\n\r\n}\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/test/java/utilities/Listener.java b/src/test/java/utilities/Listener.java
+--- a/src/test/java/utilities/Listener.java	
++++ b/src/test/java/utilities/Listener.java	
+@@ -1,5 +1,9 @@
+ package utilities;
+ 
++import base.BaseTest;
++import base.BaseTestParallel;
++import base.DriverFactoryParallel;
++import base.TestDataParallel;
+ import org.testng.IAnnotationTransformer;
+ import org.testng.ITestListener;
+ import org.testng.ITestResult;
+@@ -8,20 +12,23 @@
+ import java.io.IOException;
+ import java.lang.reflect.Constructor;
+ import java.lang.reflect.Method;
+-public class Listener  implements ITestListener, IAnnotationTransformer {
+-    @Override
++public class Listener extends BaseTestParallel implements ITestListener, IAnnotationTransformer {
++ /*   @Override
+     public void transform(ITestAnnotation annotation, Class testClass, Constructor testConstructor, Method testMethod) {
+         IAnnotationTransformer.super.transform(annotation, testClass, testConstructor, testMethod);
+         annotation.setRetryAnalyzer(RetryAnalyzer.class);
+-    }
++    }*/
+     @Override
+     public void onTestFailure(ITestResult result) {
+         ITestListener.super.onTestFailure(result);
++        takeSS takeSS = new takeSS(DriverFactoryParallel.getInstance().getDriver());
+         try {
+             takeSS.takeScreenS(result);
+         } catch (IOException e) {
+             throw new RuntimeException(e);
+         }
++        // TestDataParallel.getInstance().getTestData().get("Username");
++        System.out.println(TestDataParallel.getInstance().getTestData().get("Username") + "fallo");
+ 
+ 
+     }
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"493da8ae-d6cf-4110-a407-38b876a7b056\" name=\"Changes\" comment=\"Hola\">\r\n      <change afterPath=\"$PROJECT_DIR$/src/test/java/utilities/ReaderExcelFiles.java\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/src/test/resources/testData/dataExcelSheet.xlsx\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/pom.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/pom.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/test/java/base/BaseTest.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/test/java/base/BaseTest.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/test/java/locators/FaceLoginLocator.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/test/java/locators/FaceLoginLocator.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/test/java/pages/FacebookLoginPage.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/test/java/pages/FacebookLoginPage.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/test/java/utilities/Listener.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/test/java/utilities/Listener.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/test/java/utilities/takeSS.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/test/java/utilities/takeSS.java\" afterDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"FileTemplateManagerImpl\">\r\n    <option name=\"RECENT_TEMPLATES\">\r\n      <list>\r\n        <option value=\"Interface\" />\r\n        <option value=\"Class\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n  </component>\r\n  <component name=\"GitHubPullRequestSearchHistory\">{\r\n  &quot;lastFilter&quot;: {\r\n    &quot;state&quot;: &quot;OPEN&quot;,\r\n    &quot;assignee&quot;: &quot;Ilesthg&quot;\r\n  }\r\n}</component>\r\n  <component name=\"GitToolBoxStore\">\r\n    <option name=\"projectConfigVersion\" value=\"5\" />\r\n  </component>\r\n  <component name=\"GithubPullRequestsUISettings\">\r\n    <option name=\"selectedUrlAndAccountId\">\r\n      <UrlAndAccount>\r\n        <option name=\"accountId\" value=\"7971a2a3-6c66-4c44-8d34-8cd7f0a67111\" />\r\n        <option name=\"url\" value=\"https://github.com/Ilesthg/SeleniumWF.git\" />\r\n      </UrlAndAccount>\r\n    </option>\r\n  </component>\r\n  <component name=\"ProjectColorInfo\">{\r\n  &quot;associatedIndex&quot;: 5\r\n}</component>\r\n  <component name=\"ProjectId\" id=\"2hRuE6pJsfCfCxvfNFPGYmzeyu1\" />\r\n  <component name=\"ProjectLevelVcsManager\" settingsEditedManually=\"true\" />\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\">{\r\n  &quot;keyToString&quot;: {\r\n    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,\r\n    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,\r\n    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,\r\n    &quot;git-widget-placeholder&quot;: &quot;main&quot;\r\n  }\r\n}</component>\r\n  <component name=\"RecentsManager\">\r\n    <key name=\"MoveFile.RECENT_KEYS\">\r\n      <recent name=\"C:\\Users\\j\\IdeaProjects\\SeleniumFramework\\TestFrameworkSelenium\\src\\test\\resources\" />\r\n      <recent name=\"C:\\Users\\j\\IdeaProjects\\SeleniumFramework\\TestFrameworkSelenium\\src\\test\\configFiles\" />\r\n    </key>\r\n    <key name=\"CopyClassDialog.RECENTS_KEY\">\r\n      <recent name=\"utilities\" />\r\n    </key>\r\n  </component>\r\n  <component name=\"RunManager\" selected=\"TestNG.Test1\">\r\n    <configuration name=\"ReaderExcelFiles\" type=\"Application\" factoryName=\"Application\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <option name=\"MAIN_CLASS_NAME\" value=\"utilities.ReaderExcelFiles\" />\r\n      <module name=\"TestFrameworkSelenium\" />\r\n      <extension name=\"coverage\">\r\n        <pattern>\r\n          <option name=\"PATTERN\" value=\"utilities.*\" />\r\n          <option name=\"ENABLED\" value=\"true\" />\r\n        </pattern>\r\n      </extension>\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <configuration name=\"ReaderExcelFiles\" type=\"TestNG\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <module name=\"TestFrameworkSelenium\" />\r\n      <extension name=\"coverage\">\r\n        <pattern>\r\n          <option name=\"PATTERN\" value=\"utilities.*\" />\r\n          <option name=\"ENABLED\" value=\"true\" />\r\n        </pattern>\r\n      </extension>\r\n      <option name=\"PACKAGE_NAME\" value=\"utilities\" />\r\n      <option name=\"MAIN_CLASS_NAME\" value=\"utilities.ReaderExcelFiles\" />\r\n      <option name=\"TEST_OBJECT\" value=\"CLASS\" />\r\n      <properties />\r\n      <listeners />\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <configuration name=\"ReaderExcelFiles.readExcel\" type=\"TestNG\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <module name=\"TestFrameworkSelenium\" />\r\n      <extension name=\"coverage\">\r\n        <pattern>\r\n          <option name=\"PATTERN\" value=\"utilities.*\" />\r\n          <option name=\"ENABLED\" value=\"true\" />\r\n        </pattern>\r\n      </extension>\r\n      <option name=\"PACKAGE_NAME\" value=\"utilities\" />\r\n      <option name=\"MAIN_CLASS_NAME\" value=\"utilities.ReaderExcelFiles\" />\r\n      <option name=\"METHOD_NAME\" value=\"readExcel\" />\r\n      <option name=\"TEST_OBJECT\" value=\"METHOD\" />\r\n      <properties />\r\n      <listeners />\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <configuration name=\"Test1\" type=\"TestNG\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <module name=\"TestFrameworkSelenium\" />\r\n      <extension name=\"coverage\">\r\n        <pattern>\r\n          <option name=\"PATTERN\" value=\"testCases.*\" />\r\n          <option name=\"ENABLED\" value=\"true\" />\r\n        </pattern>\r\n      </extension>\r\n      <option name=\"PACKAGE_NAME\" value=\"testCases\" />\r\n      <option name=\"MAIN_CLASS_NAME\" value=\"testCases.Test1\" />\r\n      <option name=\"TEST_OBJECT\" value=\"CLASS\" />\r\n      <properties />\r\n      <listeners />\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <configuration name=\"Test1.gotoPage\" type=\"TestNG\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <module name=\"TestFrameworkSelenium\" />\r\n      <extension name=\"coverage\">\r\n        <pattern>\r\n          <option name=\"PATTERN\" value=\"testCases.*\" />\r\n          <option name=\"ENABLED\" value=\"true\" />\r\n        </pattern>\r\n      </extension>\r\n      <option name=\"PACKAGE_NAME\" value=\"testCases\" />\r\n      <option name=\"MAIN_CLASS_NAME\" value=\"testCases.Test1\" />\r\n      <option name=\"METHOD_NAME\" value=\"gotoPage\" />\r\n      <option name=\"TEST_OBJECT\" value=\"METHOD\" />\r\n      <properties />\r\n      <listeners />\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <recent_temporary>\r\n      <list>\r\n        <item itemvalue=\"TestNG.Test1\" />\r\n        <item itemvalue=\"TestNG.Test1.gotoPage\" />\r\n        <item itemvalue=\"TestNG.ReaderExcelFiles.readExcel\" />\r\n        <item itemvalue=\"TestNG.ReaderExcelFiles\" />\r\n        <item itemvalue=\"Application.ReaderExcelFiles\" />\r\n      </list>\r\n    </recent_temporary>\r\n  </component>\r\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"493da8ae-d6cf-4110-a407-38b876a7b056\" name=\"Changes\" comment=\"\" />\r\n      <created>1717569098660</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1717569098660</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00001\" summary=\"Hola\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1717569819970</created>\r\n      <option name=\"number\" value=\"00001\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1717569819970</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00002\" summary=\"Hola\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1717895978461</created>\r\n      <option name=\"number\" value=\"00002\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00002\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1717895978461</updated>\r\n    </task>\r\n    <option name=\"localTasksCounter\" value=\"3\" />\r\n    <servers />\r\n  </component>\r\n  <component name=\"Vcs.Log.Tabs.Properties\">\r\n    <option name=\"TAB_STATES\">\r\n      <map>\r\n        <entry key=\"MAIN\">\r\n          <value>\r\n            <State>\r\n              <option name=\"FILTERS\">\r\n                <map>\r\n                  <entry key=\"branch\">\r\n                    <value>\r\n                      <list>\r\n                        <option value=\"main\" />\r\n                      </list>\r\n                    </value>\r\n                  </entry>\r\n                </map>\r\n              </option>\r\n            </State>\r\n          </value>\r\n        </entry>\r\n      </map>\r\n    </option>\r\n  </component>\r\n  <component name=\"VcsManagerConfiguration\">\r\n    <MESSAGE value=\"Hola\" />\r\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"Hola\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	
++++ b/.idea/workspace.xml	
+@@ -4,16 +4,16 @@
+     <option name="autoReloadType" value="SELECTIVE" />
+   </component>
+   <component name="ChangeListManager">
+-    <list default="true" id="493da8ae-d6cf-4110-a407-38b876a7b056" name="Changes" comment="Hola">
+-      <change afterPath="$PROJECT_DIR$/src/test/java/utilities/ReaderExcelFiles.java" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/test/resources/testData/dataExcelSheet.xlsx" afterDir="false" />
++    <list default="true" id="493da8ae-d6cf-4110-a407-38b876a7b056" name="Changes" comment="Reading Files from Excel">
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/src/test/java/base/BaseTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/base/BaseTest.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/test/java/locators/FaceLoginLocator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/locators/FaceLoginLocator.java" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/src/test/java/pages/FacebookLoginPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/pages/FacebookLoginPage.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/test/java/testCases/Test1.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/testCases/Test1.java" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/src/test/java/utilities/Listener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/utilities/Listener.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/test/java/utilities/Locators.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/utilities/Locators.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/test/java/utilities/ReaderExcelFiles.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/utilities/ReaderExcelFiles.java" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/src/test/java/utilities/takeSS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/utilities/takeSS.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/test/resources/testData/dataExcelSheet.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/resources/testData/dataExcelSheet.xlsx" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+@@ -71,33 +71,32 @@
+       <recent name="C:\Users\j\IdeaProjects\SeleniumFramework\TestFrameworkSelenium\src\test\configFiles" />
+     </key>
+     <key name="CopyClassDialog.RECENTS_KEY">
++      <recent name="base" />
++      <recent name="pages" />
+       <recent name="utilities" />
+     </key>
+   </component>
+-  <component name="RunManager" selected="TestNG.Test1">
+-    <configuration name="ReaderExcelFiles" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+-      <option name="MAIN_CLASS_NAME" value="utilities.ReaderExcelFiles" />
++  <component name="RunManager" selected="TestNG.C:/Users/vhgm/IdeaProjects/SeleniumWF/testng.xml">
++    <configuration name="C:/Users/vhgm/IdeaProjects/SeleniumWF/testng.xml" type="TestNG" temporary="true" nameIsGenerated="true">
+       <module name="TestFrameworkSelenium" />
+-      <extension name="coverage">
+-        <pattern>
+-          <option name="PATTERN" value="utilities.*" />
+-          <option name="ENABLED" value="true" />
+-        </pattern>
+-      </extension>
++      <option name="SUITE_NAME" value="$PROJECT_DIR$/testng.xml" />
++      <option name="TEST_OBJECT" value="SUITE" />
++      <properties />
++      <listeners />
+       <method v="2">
+         <option name="Make" enabled="true" />
+       </method>
+     </configuration>
+-    <configuration name="ReaderExcelFiles" type="TestNG" temporary="true" nameIsGenerated="true">
++    <configuration name="FacebookLoginPage2" type="TestNG" temporary="true" nameIsGenerated="true">
+       <module name="TestFrameworkSelenium" />
+       <extension name="coverage">
+         <pattern>
+-          <option name="PATTERN" value="utilities.*" />
++          <option name="PATTERN" value="pages.*" />
+           <option name="ENABLED" value="true" />
+         </pattern>
+       </extension>
+-      <option name="PACKAGE_NAME" value="utilities" />
+-      <option name="MAIN_CLASS_NAME" value="utilities.ReaderExcelFiles" />
++      <option name="PACKAGE_NAME" value="pages" />
++      <option name="MAIN_CLASS_NAME" value="pages.FacebookLoginPage2" />
+       <option name="TEST_OBJECT" value="CLASS" />
+       <properties />
+       <listeners />
+@@ -105,17 +104,17 @@
+         <option name="Make" enabled="true" />
+       </method>
+     </configuration>
+-    <configuration name="ReaderExcelFiles.readExcel" type="TestNG" temporary="true" nameIsGenerated="true">
++    <configuration name="FacebookLoginPage2.testSomething" type="TestNG" temporary="true" nameIsGenerated="true">
+       <module name="TestFrameworkSelenium" />
+       <extension name="coverage">
+         <pattern>
+-          <option name="PATTERN" value="utilities.*" />
++          <option name="PATTERN" value="pages.*" />
+           <option name="ENABLED" value="true" />
+         </pattern>
+       </extension>
+-      <option name="PACKAGE_NAME" value="utilities" />
+-      <option name="MAIN_CLASS_NAME" value="utilities.ReaderExcelFiles" />
+-      <option name="METHOD_NAME" value="readExcel" />
++      <option name="PACKAGE_NAME" value="pages" />
++      <option name="MAIN_CLASS_NAME" value="pages.FacebookLoginPage2" />
++      <option name="METHOD_NAME" value="testSomething" />
+       <option name="TEST_OBJECT" value="METHOD" />
+       <properties />
+       <listeners />
+@@ -123,34 +122,35 @@
+         <option name="Make" enabled="true" />
+       </method>
+     </configuration>
+-    <configuration name="Test1" type="TestNG" temporary="true" nameIsGenerated="true">
++    <configuration name="FacebookLoginPage.loginFacebook" type="TestNG" temporary="true" nameIsGenerated="true">
+       <module name="TestFrameworkSelenium" />
+       <extension name="coverage">
+         <pattern>
+-          <option name="PATTERN" value="testCases.*" />
++          <option name="PATTERN" value="pages.*" />
+           <option name="ENABLED" value="true" />
+         </pattern>
+       </extension>
+-      <option name="PACKAGE_NAME" value="testCases" />
+-      <option name="MAIN_CLASS_NAME" value="testCases.Test1" />
+-      <option name="TEST_OBJECT" value="CLASS" />
++      <option name="PACKAGE_NAME" value="pages" />
++      <option name="MAIN_CLASS_NAME" value="pages.FacebookLoginPage" />
++      <option name="METHOD_NAME" value="loginFacebook" />
++      <option name="TEST_OBJECT" value="METHOD" />
+       <properties />
+       <listeners />
+       <method v="2">
+         <option name="Make" enabled="true" />
+       </method>
+     </configuration>
+-    <configuration name="Test1.gotoPage" type="TestNG" temporary="true" nameIsGenerated="true">
++    <configuration name="FacebookLoginPage.readDataExcel_andUser" type="TestNG" temporary="true" nameIsGenerated="true">
+       <module name="TestFrameworkSelenium" />
+       <extension name="coverage">
+         <pattern>
+-          <option name="PATTERN" value="testCases.*" />
++          <option name="PATTERN" value="pages.*" />
+           <option name="ENABLED" value="true" />
+         </pattern>
+       </extension>
+-      <option name="PACKAGE_NAME" value="testCases" />
+-      <option name="MAIN_CLASS_NAME" value="testCases.Test1" />
+-      <option name="METHOD_NAME" value="gotoPage" />
++      <option name="PACKAGE_NAME" value="pages" />
++      <option name="MAIN_CLASS_NAME" value="pages.FacebookLoginPage" />
++      <option name="METHOD_NAME" value="readDataExcel_andUser" />
+       <option name="TEST_OBJECT" value="METHOD" />
+       <properties />
+       <listeners />
+@@ -160,11 +160,11 @@
+     </configuration>
+     <recent_temporary>
+       <list>
+-        <item itemvalue="TestNG.Test1" />
+-        <item itemvalue="TestNG.Test1.gotoPage" />
+-        <item itemvalue="TestNG.ReaderExcelFiles.readExcel" />
+-        <item itemvalue="TestNG.ReaderExcelFiles" />
+-        <item itemvalue="Application.ReaderExcelFiles" />
++        <item itemvalue="TestNG.C:/Users/vhgm/IdeaProjects/SeleniumWF/testng.xml" />
++        <item itemvalue="TestNG.FacebookLoginPage2" />
++        <item itemvalue="TestNG.FacebookLoginPage2.testSomething" />
++        <item itemvalue="TestNG.FacebookLoginPage.loginFacebook" />
++        <item itemvalue="TestNG.FacebookLoginPage.readDataExcel_andUser" />
+       </list>
+     </recent_temporary>
+   </component>
+@@ -193,9 +193,22 @@
+       <option name="project" value="LOCAL" />
+       <updated>1717895978461</updated>
+     </task>
+-    <option name="localTasksCounter" value="3" />
++    <task id="LOCAL-00003" summary="Reading Files from Excel">
++      <option name="closed" value="true" />
++      <created>1718003453273</created>
++      <option name="number" value="00003" />
++      <option name="presentableId" value="LOCAL-00003" />
++      <option name="project" value="LOCAL" />
++      <updated>1718003453273</updated>
++    </task>
++    <option name="localTasksCounter" value="4" />
+     <servers />
+   </component>
++  <component name="UnknownFeatures">
++    <option featureType="dependencySupport" implementationName="java:io.reactivex.rxjava3:rxjava" />
++    <option featureType="dependencySupport" implementationName="java:org.seleniumhq.selenium:selenium-java" />
++    <option featureType="dependencySupport" implementationName="java:org.projectlombok:lombok" />
++  </component>
+   <component name="Vcs.Log.Tabs.Properties">
+     <option name="TAB_STATES">
+       <map>
+@@ -221,6 +234,7 @@
+   </component>
+   <component name="VcsManagerConfiguration">
+     <MESSAGE value="Hola" />
+-    <option name="LAST_COMMIT_MESSAGE" value="Hola" />
++    <MESSAGE value="Reading Files from Excel" />
++    <option name="LAST_COMMIT_MESSAGE" value="Reading Files from Excel" />
+   </component>
+ </project>
+\ No newline at end of file
