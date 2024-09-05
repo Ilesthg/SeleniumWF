@@ -17,47 +17,53 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
+import utilities.Locators;
 import utilities.PropertiesReader;
 
+import java.io.FileReader;
 import java.lang.reflect.Method;
-import java.time.Duration;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Objects;
+import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
+//Leaving as public so we can extend from test clases
 public class BaseTest {
 
-    public static WebDriver driver;
+    //Making constructor protected, so only child class can see constructor
+    protected BaseTest() {
+    }
+
+
+    private WebDriver driver;
     private String browser, url;
+    private BrowserFactory bf = new BrowserFactory();
     private final String routeDir = System.getProperty("user.dir");
 
     //Use 1 time
-    public ExtentReports extent;
+    private ExtentReports extent;
     //Use n time
-    public ExtentTest logger;
-
-    public ExtentSparkReporter sparkReporter;
-
-   /* FileReader fr;
-    Properties prop = new Properties();*/
+    public static ExtentTest logger;
+    protected Locators loc;
 
 
     @BeforeSuite
     public void initDriver() throws Exception {
-        System.out.println("Initialazing Driver and Reading properties file");
+        System.out.println("Reading properties file");
 
-        if (driver == null) {
-            /*fr = new FileReader(routeDir + "/src/test/resources/configFiles/data.properties");
-            prop.load(fr);*/
-            browser =  PropertiesReader.giveKeyValueFromProperties("browser");
-            url =  PropertiesReader.giveKeyValueFromProperties("url");
-        }
+        browser = PropertiesReader.giveKeyValueFromProperties("browser");
+        url = PropertiesReader.giveKeyValueFromProperties("url");
     }
-
 
 
     @BeforeTest
     public void beforeTestM() {
+        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyy HH-mm-ss");
+        Date date = new Date();
 
-        sparkReporter = new ExtentSparkReporter(routeDir + "/src/test/resources/reports/SDTE.html");
+        String ssDate = format.format(date);
+        ExtentSparkReporter sparkReporter = new ExtentSparkReporter(routeDir + "/src/test/resources/reports/SDTE" + ssDate + ".html");
         extent = new ExtentReports();
         extent.attachReporter(sparkReporter);
         sparkReporter.config().setTheme(Theme.DARK);
@@ -68,19 +74,27 @@ public class BaseTest {
     }
 
 
-
     @BeforeMethod
-    public void beforeMethod(Method testMethod) {
+    public void beforeMethod(Method testMethod) throws Exception {
+        System.out.println("Initialazing Driver");
         logger = extent.createTest(testMethod.getName());
-        setupDriver();
+        if (Objects.isNull(driver)) {
+            driver = bf.setupDriverReturn(browser);
+        }
+
         driver.manage().window().maximize();
-        driver.manage().timeouts().implicitlyWait(10 , TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
         driver.navigate().to(url);
+
+// Initialize Locators instance
+        loc = new Locators(driver);
+
     }
+
     @AfterMethod
     public void afterMethod(ITestResult result) {
 
-       if (result.getStatus() == ITestResult.FAILURE) {
+        if (result.getStatus() == ITestResult.FAILURE) {
             logger.log(Status.FAIL, MarkupHelper.createLabel(result.getName() + " - Test case failed", ExtentColor.RED));
             logger.log(Status.FAIL, MarkupHelper.createLabel(result.getThrowable() + " - Test case failed", ExtentColor.RED));
         } else if (result.getStatus() == ITestResult.SKIP) {
@@ -89,9 +103,8 @@ public class BaseTest {
             logger.log(Status.PASS, MarkupHelper.createLabel(result.getName() + " - Test case SUCCESS", ExtentColor.GREEN));
         }
 
-        //driver.quit();
-    }
 
+    }
 
 
     @AfterTest
@@ -102,36 +115,17 @@ public class BaseTest {
 
     @AfterSuite//or AfterSuite
     public void closeDriver() {
-        System.out.println("Closing Driver");
-       //  driver.close();
-    }
-
-
-
-    public void setupDriver() {
-        if (browser.equalsIgnoreCase("Chrome")) {
-            WebDriverManager.chromedriver().setup();
-            ChromeOptions chromeOptions = new ChromeOptions();
-            chromeOptions.addArguments("--incognito");
-            driver = new ChromeDriver(chromeOptions);
-            //Redirecting to URL
-           // driver.get(url);
-
-        } else if (browser.equalsIgnoreCase("Firefox")) {
-            WebDriverManager.firefoxdriver().setup();
-            FirefoxOptions firefoxOptions = new FirefoxOptions();
-            firefoxOptions.addArguments("-private");
-            driver = new FirefoxDriver();
-         //   driver.get(url);
-        } else if (browser.equalsIgnoreCase("Edge")) {
-            WebDriverManager.edgedriver().setup();
-            EdgeOptions edgeOptions = new EdgeOptions();
-            //edgeOptions.addArguments();
-            driver = new EdgeDriver();
-         //   driver.get(url);
+        if (Objects.nonNull(driver)) {
+            driver.quit();
+            driver = null;
         }
+
     }
 
+    //TO GET DRIVER
+    public WebDriver getDriverBT() {
+        return driver;
+    }
 
 
 }

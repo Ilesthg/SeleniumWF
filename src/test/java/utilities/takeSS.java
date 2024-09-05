@@ -1,20 +1,32 @@
 package utilities;
 
 
+
 import base.BaseTest;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.WebDriver;
 import org.testng.ITestResult;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
-public  class takeSS  extends BaseTest {
+public class takeSS extends BaseTest {
 
-    public static void takeScreenS(ITestResult result) throws IOException {
-        String FileName = System.getProperty("user.dir") + File.separator + "src/test/resources/screenshots" + result.getMethod().getMethodName();
-        File ss = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
-        FileUtils.copyFile(ss , new File(FileName+ ".png"));
+    public  void takeScreenS(ITestResult result) throws IOException {
+        //WebDriver driver =  driverFromBaseTest();
+
+        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyy HH-mm-ss");
+        Date date = new Date();
+        // String ssDate =  date.toString().replace(" ", "-").replace(":","-");
+        String ssDate = format.format(date);
+        String FileName = System.getProperty("user.dir") + "/src/test/resources/screenshots/"  +ssDate +"_"+result.getName()+".png";
+        File ss = ((TakesScreenshot) getDriverBT()).getScreenshotAs(OutputType.FILE);
+        FileUtils.copyFile(ss, new File(FileName));
     }
+
+
 }

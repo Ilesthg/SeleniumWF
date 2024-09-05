@@ -2,11 +2,11 @@ package testCases;
 
 
 
-import base.DriverFactoryThread;
+import base.BaseTestParallel;
 import org.testng.annotations.Test;
 import pages.Logic;
 
-public class Cases2 extends DriverFactoryThread {
+public class Cases2 extends BaseTestParallel {
 
     @Test
     public void test1()  {

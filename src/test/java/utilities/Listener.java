@@ -17,8 +17,9 @@ public class Listener  implements ITestListener, IAnnotationTransformer {
     @Override
     public void onTestFailure(ITestResult result) {
         ITestListener.super.onTestFailure(result);
+        takeSS ss = new takeSS();
         try {
-            takeSS.takeScreenS(result);
+            ss.takeScreenS(result);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

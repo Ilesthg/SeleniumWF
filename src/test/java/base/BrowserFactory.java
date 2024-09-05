@@ -9,9 +9,11 @@ import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 
-public class BrowserFactory {
+public final class BrowserFactory {
 
-    public WebDriver setupDriverReturn(String browser) throws Exception {
+
+
+    public WebDriver setupDriverReturn(String browser) {
 
         WebDriver driver = null;
 
@@ -31,7 +33,7 @@ public class BrowserFactory {
             WebDriverManager.edgedriver().setup();
             EdgeOptions edgeOptions = new EdgeOptions();
             //edgeOptions.addArguments();
-                driver = new EdgeDriver();
+                driver = new EdgeDriver(edgeOptions);
 
         }
         return driver;

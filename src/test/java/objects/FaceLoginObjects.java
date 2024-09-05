@@ -1,9 +1,6 @@
-package locators;
+package objects;
 
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
-
-public interface FaceLoginLocator
+public interface FaceLoginObjects
 {
     String iniciarSesionButton = "//button[@id='u_0_5_VH']";
      String emailInputField = "//input[@id='email']";

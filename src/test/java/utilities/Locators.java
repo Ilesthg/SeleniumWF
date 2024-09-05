@@ -2,19 +2,75 @@ package utilities;
 
 
 import base.BaseTest;
+
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
+import org.testng.annotations.Test;
 
 import java.time.Duration;
 import java.util.List;
 
-public class Locators extends BaseTest {
+public class Locators {
 
-    static WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+//To get the driver we can use @Beforemethod annotation to call the driver
+ /* @BeforeClass
+    public void setUp() throws Exception {
+        initDriver(); // Initialize the WebDriver
+        locators = new Locators(); // Initialize the Locators instance after driver initialization
+    }*/
+// Use lazy init   private void initializeDriver() {
+  /*         if (this.driver == null) {
+                this.driver = driverFromBaseTest();
+               this.wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+            }
+        }
 
-    public static WebElement findElement(String elementType, String elementValue) {
+        public WebElement findElement(String elementType, String elementValue) {
+            initializeDriver();  // Ensure driver and wait are initialized before use*/
+
+
+    ////To use the driver protected from BASETEST, Note driver will be accessible from BaseTest cause its PROTECTED
+    // /*   public static WebDriverWait createWait(WebDriver driver, int seconds) {
+    //        return new WebDriverWait(driver, Duration.ofSeconds(seconds));
+    //    }
+    //
+    //    public static WebElement findElement(WebDriver driver, String elementType, String elementValue) {
+    //        if (elementType.equalsIgnoreCase("Xpath")) {
+    //            return driver.findElement(By.xpath(elementValue));
+    //
+    //
+    //
+    //            and on Test class
+    //            public class YourTestClass extends BaseTest {
+    //             @Test
+    //    public void yourTestMethod() {
+    //        WebElement element = Locators.findElement(driver, "Xpath", "//div[@id='example']");
+    //        // Perform your test actions using 'element'
+    //    }
+    //    }
+    //        }*/
+
+    //Or Insitate the Locator class in BaseTestClass
+
+    private WebDriver driver;
+    private WebDriverWait wait;
+
+    public Locators(WebDriver driver){
+        this.driver = driver;
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+    }
+
+
+
+
+
+
+    public WebElement findElement(String elementType, String elementValue) {
+
         if (elementType.equalsIgnoreCase("Xpath")) {
             return driver.findElement(By.xpath(elementValue));
         } else if (elementType.equalsIgnoreCase("Css")) {
@@ -33,7 +89,7 @@ public class Locators extends BaseTest {
         }
     }
 
-    public static List<WebElement> findElementS(String elementType, String elementValue) {
+    public List<WebElement> findElementS(String elementType, String elementValue) {
         if (elementType.equalsIgnoreCase("Xpath")) {
             return driver.findElements(By.xpath(elementValue));
         } else if (elementType.equalsIgnoreCase("Css")) {
@@ -52,7 +108,7 @@ public class Locators extends BaseTest {
         }
     }
 
-    public static WebElement findElementWithWait(String elementType, String elementValue) {
+    public WebElement findElementWithWait(String elementType, String elementValue) {
 
         if (elementType.equalsIgnoreCase("Xpath")) {
             return wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(elementValue)));
@@ -74,7 +130,7 @@ public class Locators extends BaseTest {
 
     }
 
-    public static List<WebElement> findElementsWithWait(String elementType, String elementValue) {
+    public List<WebElement> findElementsWithWait(String elementType, String elementValue) {
         if (elementType.equalsIgnoreCase("Xpath")) {
             return wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath(elementValue)));
         } else if (elementType.equalsIgnoreCase("Css")) {
@@ -91,7 +147,6 @@ public class Locators extends BaseTest {
             System.out.println("No Locator");
             return null;
         }
-
 
 
     }

@@ -1,35 +1,35 @@
 package base;
 
+//Thread Local--> each thread maintains his own copy of data(In HashMap Thread Local Map)
+
 import org.openqa.selenium.WebDriver;
 
-import java.util.HashMap;
-
 public class DriverFactoryParallel {
-    private DriverFactoryParallel(){
-
-    }
-    private static   DriverFactoryParallel instance = new DriverFactoryParallel();
-
-
-
-    public static DriverFactoryParallel getInstance(){
-        return instance;
+    private DriverFactoryParallel() {
     }
 
+    private static final DriverFactoryParallel instanceFactoryOfDrivers = new DriverFactoryParallel();
 
-    ThreadLocal<WebDriver> webDriverParallel = new ThreadLocal<>();
-
-    public WebDriver getDriver(){
-        return webDriverParallel.get();
+    public static DriverFactoryParallel getInstance() {
+        return instanceFactoryOfDrivers;
     }
 
+    private static  ThreadLocal<WebDriver> driver = new ThreadLocal<>();
 
-    public void setDriver(WebDriver driver) {
-        webDriverParallel.set(driver);
+
+    public void setDriver(WebDriver driversParam) {
+
+        driver.set(driversParam);
     }
-    public void closeDriver () {
-        webDriverParallel.remove();
 
+    public WebDriver getDriver() {
+        return driver.get();
+    }
+
+    public void closeDrivers() {
+        driver.get().close();
+        driver.remove();
 
     }
+
 }
