@@ -18,9 +18,9 @@ public class SeleniumMethodsCust extends BaseTest {
             webElement.sendKeys(valueToSend);
             // System.out.println("Send Keys Method Success, able to send key on element: " + elementName + " with value" + valueToSend);
             //  logger.log(Status.PASS, ("Send Keys Method Success, able to send key on element: " + elementName + " with value" + valueToSend ));
-            logger.log(Status.PASS, MarkupHelper.createLabel("Send Keys Method SUCCESS, able to send key on element: " + elementName + " with value" + valueToSend, ExtentColor.GREEN));
+            logger.log(Status.PASS, MarkupHelper.createLabel("Send Keys Method SUCCESS, able to send key on element: ->" + elementName + " with value: ->"  + valueToSend, ExtentColor.GREEN));
         } catch (Exception e) {
-            logger.log(Status.FAIL, MarkupHelper.createLabel("Send Keys Method FAILED, failure to send key on element: " + elementName + " with value: " + valueToSend + " due to exception: " + e, ExtentColor.RED));
+            logger.log(Status.FAIL, MarkupHelper.createLabel("Send Keys Method FAILED, failure to send key on element: " + elementName + " with value: ->" + valueToSend + " due to exception: ->" + e, ExtentColor.RED));
         }
     }
     public static void clickMethod(WebElement webElement, String elementName){

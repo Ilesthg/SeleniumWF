@@ -4,16 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="493da8ae-d6cf-4110-a407-38b876a7b056" name="Changes" comment="Adding multiThread">
+    <list default="true" id="493da8ae-d6cf-4110-a407-38b876a7b056" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/test/java/testCases/TestFLP.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/base/BaseTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/base/BaseTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/base/BaseTestParallel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/base/BaseTestParallel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/base/BrowserFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/base/BrowserFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/objects/FacebookLoginPage__PageFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/objects/FacebookLoginPage__PageFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/pages/FaceLoginPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/pages/FaceLoginPage.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/pages/FacebookLoginPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/pages/FacebookLoginPage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/pages/FacebookLoginPage2.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/testCases/Test1.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/testCases/Test1.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/utilities/Locators.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/utilities/Locators.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/utilities/LocatorsFindBy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/utilities/LocatorsFindBy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/utilities/LocatorsFindByThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/utilities/LocatorsFindByThread.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/utilities/PropertiesReader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/utilities/PropertiesReader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/utilities/SeleniumMethodsCust.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/utilities/SeleniumMethodsCust.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/resources/reports/SDTE.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/testng.xml" beforeDir="false" afterPath="$PROJECT_DIR$/testng.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,6 +33,7 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RESET_MODE" value="MIXED" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
   &quot;lastFilter&quot;: {
@@ -37,6 +41,9 @@
     &quot;assignee&quot;: &quot;Ilesthg&quot;
   }
 }</component>
+  <component name="GitToolBoxStore">
+    <option name="projectConfigVersion" value="5" />
+  </component>
   <component name="GithubPullRequestsUISettings">
     <option name="selectedUrlAndAccountId">
       <UrlAndAccount>
@@ -74,40 +81,23 @@
       <recent name="C:\Users\j\IdeaProjects\SeleniumFramework\TestFrameworkSelenium\src\test\configFiles" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="pages" />
       <recent name="base" />
+      <recent name="pages" />
       <recent name="utilities" />
     </key>
   </component>
-  <component name="RunManager" selected="TestNG.Test1.gotoPage1">
-    <configuration name="FacebookLoginPageCopy" type="TestNG" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="TestNG.Test1.test22">
+    <configuration name="Test1.Sheet1" type="TestNG" temporary="true" nameIsGenerated="true">
       <module name="TestFrameworkSelenium" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="pages.*" />
+          <option name="PATTERN" value="testCases.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="pages" />
-      <option name="MAIN_CLASS_NAME" value="pages.FacebookLoginPageCopy" />
-      <option name="TEST_OBJECT" value="CLASS" />
-      <properties />
-      <listeners />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="FacebookLoginPage.locatorNewStrategyFindBy" type="TestNG" temporary="true" nameIsGenerated="true">
-      <module name="TestFrameworkSelenium" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="pages.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="pages" />
-      <option name="MAIN_CLASS_NAME" value="pages.FacebookLoginPage" />
-      <option name="METHOD_NAME" value="locatorNewStrategyFindBy" />
+      <option name="PACKAGE_NAME" value="testCases" />
+      <option name="MAIN_CLASS_NAME" value="testCases.Test1" />
+      <option name="METHOD_NAME" value="Sheet1" />
       <option name="TEST_OBJECT" value="METHOD" />
       <properties />
       <listeners />
@@ -115,17 +105,17 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="FacebookLoginPage.loginFacebook" type="TestNG" temporary="true" nameIsGenerated="true">
+    <configuration name="Test1.Sheet2" type="TestNG" temporary="true" nameIsGenerated="true">
       <module name="TestFrameworkSelenium" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="pages.*" />
+          <option name="PATTERN" value="testCases.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="pages" />
-      <option name="MAIN_CLASS_NAME" value="pages.FacebookLoginPage" />
-      <option name="METHOD_NAME" value="loginFacebook" />
+      <option name="PACKAGE_NAME" value="testCases" />
+      <option name="MAIN_CLASS_NAME" value="testCases.Test1" />
+      <option name="METHOD_NAME" value="Sheet2" />
       <option name="TEST_OBJECT" value="METHOD" />
       <properties />
       <listeners />
@@ -151,7 +141,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="qmPDTests.test1" type="TestNG" temporary="true" nameIsGenerated="true">
+    <configuration name="Test1.test22" type="TestNG" temporary="true" nameIsGenerated="true">
       <module name="TestFrameworkSelenium" />
       <extension name="coverage">
         <pattern>
@@ -160,9 +150,26 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="testCases" />
-      <option name="MAIN_CLASS_NAME" value="testCases.qmPDTests" />
-      <option name="METHOD_NAME" value="test1" />
+      <option name="MAIN_CLASS_NAME" value="testCases.Test1" />
+      <option name="METHOD_NAME" value="test22" />
       <option name="TEST_OBJECT" value="METHOD" />
+      <properties />
+      <listeners />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TestFLP" type="TestNG" temporary="true" nameIsGenerated="true">
+      <module name="TestFrameworkSelenium" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="testCases.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="testCases" />
+      <option name="MAIN_CLASS_NAME" value="testCases.TestFLP" />
+      <option name="TEST_OBJECT" value="CLASS" />
       <properties />
       <listeners />
       <method v="2">
@@ -171,11 +178,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="TestNG.Test1.test22" />
+        <item itemvalue="TestNG.Test1.Sheet2" />
+        <item itemvalue="TestNG.Test1.Sheet1" />
+        <item itemvalue="TestNG.TestFLP" />
         <item itemvalue="TestNG.Test1.gotoPage1" />
-        <item itemvalue="TestNG.FacebookLoginPage.loginFacebook" />
-        <item itemvalue="TestNG.FacebookLoginPageCopy" />
-        <item itemvalue="TestNG.qmPDTests.test1" />
-        <item itemvalue="TestNG.FacebookLoginPage.locatorNewStrategyFindBy" />
       </list>
     </recent_temporary>
   </component>

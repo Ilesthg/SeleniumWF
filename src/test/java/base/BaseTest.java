@@ -45,7 +45,7 @@ public class BaseTest {
     private ExtentReports extent;
     //Use n time
     public static ExtentTest logger;
-    protected Locators loc;
+  //  protected Locators loc;
 
 
     @BeforeSuite
@@ -87,7 +87,7 @@ public class BaseTest {
         driver.navigate().to(url);
 
 // Initialize Locators instance
-        loc = new Locators(driver);
+     //   loc = new Locators(driver);
 
     }
 

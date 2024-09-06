@@ -16,45 +16,6 @@ import java.util.List;
 
 public class Locators {
 
-//To get the driver we can use @Beforemethod annotation to call the driver
- /* @BeforeClass
-    public void setUp() throws Exception {
-        initDriver(); // Initialize the WebDriver
-        locators = new Locators(); // Initialize the Locators instance after driver initialization
-    }*/
-// Use lazy init   private void initializeDriver() {
-  /*         if (this.driver == null) {
-                this.driver = driverFromBaseTest();
-               this.wait = new WebDriverWait(driver, Duration.ofSeconds(5));
-            }
-        }
-
-        public WebElement findElement(String elementType, String elementValue) {
-            initializeDriver();  // Ensure driver and wait are initialized before use*/
-
-
-    ////To use the driver protected from BASETEST, Note driver will be accessible from BaseTest cause its PROTECTED
-    // /*   public static WebDriverWait createWait(WebDriver driver, int seconds) {
-    //        return new WebDriverWait(driver, Duration.ofSeconds(seconds));
-    //    }
-    //
-    //    public static WebElement findElement(WebDriver driver, String elementType, String elementValue) {
-    //        if (elementType.equalsIgnoreCase("Xpath")) {
-    //            return driver.findElement(By.xpath(elementValue));
-    //
-    //
-    //
-    //            and on Test class
-    //            public class YourTestClass extends BaseTest {
-    //             @Test
-    //    public void yourTestMethod() {
-    //        WebElement element = Locators.findElement(driver, "Xpath", "//div[@id='example']");
-    //        // Perform your test actions using 'element'
-    //    }
-    //    }
-    //        }*/
-
-    //Or Insitate the Locator class in BaseTestClass
 
     private WebDriver driver;
     private WebDriverWait wait;
@@ -63,11 +24,6 @@ public class Locators {
         this.driver = driver;
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(5));
     }
-
-
-
-
-
 
     public WebElement findElement(String elementType, String elementValue) {
 

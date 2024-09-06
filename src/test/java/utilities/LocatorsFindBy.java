@@ -13,24 +13,32 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 import java.util.List;
 
-public class LocatorsFindBy extends BaseTest {
+public class LocatorsFindBy {
 
-//    WebDriver driver =  driverFromBaseTest();
+
     private WebDriverWait wait;
      private WebDriver driver ;
+
     //Initi Elements from FindByLocators, else you can init on Constructor here
     private FacebookLoginPage__PageFactory elements;
-
     public FacebookLoginPage__PageFactory getElements() {
         return elements;
-    }
+    }// to get elements from objects
 
+    //Constructor
      public LocatorsFindBy(WebDriver driver) {
          super();
          this.driver = driver;
          this.elements =  new FacebookLoginPage__PageFactory(driver);
-          this.wait =  new WebDriverWait(driver, Duration.ofSeconds(5));;
+          this.wait =  new WebDriverWait(driver, Duration.ofSeconds(5));
      }
+
+     /*
+     *Methods
+     *
+     *
+     *
+      */
     public WebElement findElementBy(WebElement element) throws IllegalAccessException {
         //  return element; //Ya esta establecida el locator el la Class FindBy Objects
         By by = LocatorSpecified___FindBy.getByFromWebElement(elements, element);
