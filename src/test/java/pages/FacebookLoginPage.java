@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.util.HashMap;
 
 
-public final class FacebookLoginPage {
+public final class FacebookLoginPage  extends SeleniumMethodsCust {
 
     private final By bttnInciarSesion = By.xpath("//button[@id='u_0_5_VH']");
     private final By inputEmail = By.xpath("//input[@id='email']");
@@ -42,7 +42,7 @@ public final class FacebookLoginPage {
         lfby.findElementBy(lfby.getElements().getEmailTXT()).sendKeys("Hola");
 
 
-        SeleniumMethodsCust.sendKeys(lfby.findElementwithWait(lfby.getElements().getEmailTXT()), " Email Input Field ", " VHGM@hotmail.com ");
+        sendKeys(lfby.findElementwithWait(lfby.getElements().getEmailTXT()), " Email Input Field ", " VHGM@hotmail.com ");
     }
     //--------------------------------------------EXCEL TESTS-------------------------------
 
@@ -54,8 +54,8 @@ public final class FacebookLoginPage {
     }
 
     public void Sheet2(String username, String password) {
-        SeleniumMethodsCust.sendKeys(this.driver.findElement(inputEmail), "Input Email", username);
-        SeleniumMethodsCust.sendKeys(this.driver.findElement(inputPassword), "Input Password", password);
+      sendKeys(this.driver.findElement(inputEmail), "Input Email", username);
+      sendKeys(this.driver.findElement(inputPassword), "Input Password", password);
     }
 
 
@@ -63,15 +63,15 @@ public final class FacebookLoginPage {
         HashMap<String, String> hm = (HashMap<String, String>) obj;
 
 
-        SeleniumMethodsCust.sendKeys(driver.findElement(inputEmail), "Email", hm.get("Username"));
-        SeleniumMethodsCust.sendKeys(driver.findElement(inputPassword), "Password", hm.get("Password"));
+       sendKeys (driver.findElement(inputEmail), "Email", hm.get("Username"));
+      sendKeys(driver.findElement(inputPassword), "Password", hm.get("Password"));
 
     }
 
     public void excelTest2(Object obj) {
         HashMap<String, String> hm = (HashMap<String, String>) obj;
-        SeleniumMethodsCust.sendKeys(driver.findElement(inputEmail), "Email", hm.get("Username"));
-        SeleniumMethodsCust.sendKeys(driver.findElement(inputPassword), "Password", hm.get("Password"));
+     sendKeys(driver.findElement(inputEmail), "Email", hm.get("Username"));
+       sendKeys(driver.findElement(inputPassword), "Password", hm.get("Password"));
 
     }
 

@@ -1,13 +1,24 @@
 package pages;
 
 
+import base.DriverFactoryParallel;
+import base.TestContext;
+import com.aventstack.extentreports.ExtentTest;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import utilities.SeleniumMethodsCust;
 
 
 //This class should never extend the basetest class
-public final class FaceLoginPage {
+public final class FaceLoginPage extends SeleniumMethodsCust {
     private WebDriver driver;
+    private ExtentTest logger2;
+
+
+  // private WebDriver driver = DriverFactoryParallel.getInstance().getDriver();//Using BaseTestParallel
+    //private WebDriver driver = new TestContext().getDriver();//Using BaseTestC con TEST CONTEXT
+   // private WebDriver driver = new TestContext().getDriver();
+
 
     private final By bttnInciarSesion = By.xpath("//button[@id='u_0_5_VH']");
     private final By inputEmail = By.xpath("//input[@id='email']");
@@ -15,13 +26,19 @@ public final class FaceLoginPage {
 
     //Contructor to pass the driver on test class
     public FaceLoginPage(WebDriver driver) {
+
         this.driver = driver;
+
+
     }
 
     public FaceLoginPage loginFacebook() {
 
+
         this.driver.findElement(inputEmail).sendKeys("HolaCrayola");
-        this.driver.findElement(inputPassword).sendKeys("teApestaLaCola");
+     //   this.driver.findElement(inputPassword).sendKeys("teApestaLaCola");
+        sendKeysBy(inputPassword, "InputPassword", "Holaaaaaaaaaaaa");
+
         return this;
 
     }

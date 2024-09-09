@@ -45,7 +45,7 @@ public class BaseTest {
     private ExtentReports extent;
     //Use n time
     public static ExtentTest logger;
-  //  protected Locators loc;
+    //  protected Locators loc;
 
 
     @BeforeSuite
@@ -59,25 +59,19 @@ public class BaseTest {
 
     @BeforeTest
     public void beforeTestM() {
-        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyy HH-mm-ss");
-        Date date = new Date();
 
-        String ssDate = format.format(date);
-        ExtentSparkReporter sparkReporter = new ExtentSparkReporter(routeDir + "/src/test/resources/reports/SDTE" + ssDate + ".html");
-        extent = new ExtentReports();
-        extent.attachReporter(sparkReporter);
-        sparkReporter.config().setTheme(Theme.DARK);
-        extent.setSystemInfo("Hostname", "RHEL8");
-        extent.setSystemInfo("Username", "root");
-        sparkReporter.config().setDocumentTitle("Automation Report");
-        sparkReporter.config().setReportName("Automation Test results");
+        extent = ExtentReportNG.setUpExtentReports();
+
     }
 
 
     @BeforeMethod
     public void beforeMethod(Method testMethod) throws Exception {
         System.out.println("Initialazing Driver");
+
         logger = extent.createTest(testMethod.getName());
+        ExtentTestFactoryParallel.getInstance().setExtentTest(logger);
+
         if (Objects.isNull(driver)) {
             driver = bf.setupDriverReturn(browser);
         }
@@ -86,8 +80,8 @@ public class BaseTest {
         driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
         driver.navigate().to(url);
 
-// Initialize Locators instance
-     //   loc = new Locators(driver);
+        // Initialize Locators instance
+        //   loc = new Locators(driver);
 
     }
 
@@ -95,12 +89,13 @@ public class BaseTest {
     public void afterMethod(ITestResult result) {
 
         if (result.getStatus() == ITestResult.FAILURE) {
-            logger.log(Status.FAIL, MarkupHelper.createLabel(result.getName() + " - Test case failed", ExtentColor.RED));
-            logger.log(Status.FAIL, MarkupHelper.createLabel(result.getThrowable() + " - Test case failed", ExtentColor.RED));
+            ExtentTestFactoryParallel.getInstance().getExtentTest().log(Status.FAIL, MarkupHelper.createLabel(result.getName() + " - Test case failed", ExtentColor.RED));
+            ExtentTestFactoryParallel.getInstance().getExtentTest().log(Status.FAIL, MarkupHelper.createLabel(result.getThrowable() + " - Test case failed", ExtentColor.RED));
         } else if (result.getStatus() == ITestResult.SKIP) {
-            logger.log(Status.SKIP, MarkupHelper.createLabel(result.getName() + " - Test case Skipped", ExtentColor.ORANGE));
+            ExtentTestFactoryParallel.getInstance().getExtentTest().log(Status.SKIP, MarkupHelper.createLabel(result.getName() + " - Test case Skipped", ExtentColor.ORANGE));
         } else if (result.getStatus() == ITestResult.SUCCESS) {
-            logger.log(Status.PASS, MarkupHelper.createLabel(result.getName() + " - Test case SUCCESS", ExtentColor.GREEN));
+            ExtentTestFactoryParallel.getInstance().getExtentTest().log(Status.PASS, MarkupHelper.createLabel(result.getName() + " - Test case SUCCESS", ExtentColor.GREEN));
+            //logger.log(Status.PASS, MarkupHelper.createLabel(result.getName() + " - Test case SUCCESS", ExtentColor.GREEN));
         }
 
 

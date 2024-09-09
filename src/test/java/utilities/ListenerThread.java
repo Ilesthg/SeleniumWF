@@ -21,8 +21,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class ListenerThread implements ITestListener {
-    static ExtentReports extReport;
-    static ExtentTest logger;
+    private static ExtentReports extReport;
+    private static ExtentTest logger;
 
 
     @Override
