@@ -1,12 +1,12 @@
 package pages;
 
-import base.BaseTest;
 import objects.FaceLoginObjects;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.testng.annotations.Test;
 import utilities.*;
+import utilities.Locators.Locators;
+import utilities.Locators.LocatorsFindBy;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -47,7 +47,7 @@ public final class FacebookLoginPage  extends SeleniumMethodsCust {
     //--------------------------------------------EXCEL TESTS-------------------------------
 
     ///  @Factory(dataProviderClass = ReaderExcelFiles.class, dataProvider = "ExcelData")
-    public void Sheet1(String username, String password) throws IOException {
+    public void Sheet1(String username, String password)  {
         this.driver.findElement(inputEmail).sendKeys(username);
         this.driver.findElement(inputPassword).sendKeys(password);
 

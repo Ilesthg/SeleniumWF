@@ -4,31 +4,27 @@ package base;
 
 import org.openqa.selenium.WebDriver;
 
-public class DriverFactoryParallel {
-    private DriverFactoryParallel() {
-    }
+import java.util.Objects;
+
+public final class DriverFactoryParallel {
+    private DriverFactoryParallel() {}
 
     private static final DriverFactoryParallel instanceFactoryOfDrivers = new DriverFactoryParallel();
-
-    public static DriverFactoryParallel getInstance() {
-        return instanceFactoryOfDrivers;
-    }
-
     private static  ThreadLocal<WebDriver> driver = new ThreadLocal<>();
 
 
-    public void setDriver(WebDriver driversParam) {
-
-        driver.set(driversParam);
-    }
-
+    public static DriverFactoryParallel getInstance() {return instanceFactoryOfDrivers;}
+    public void setDriver(WebDriver driversParam) {driver.set(driversParam);}
     public WebDriver getDriver() {
         return driver.get();
     }
 
     public void closeDrivers() {
-        driver.get().close();
-        driver.remove();
+
+        if (Objects.nonNull(driver)) {
+            driver.get().close();
+            driver.remove();
+        }
 
     }
 

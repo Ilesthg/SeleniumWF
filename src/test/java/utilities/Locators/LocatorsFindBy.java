@@ -1,7 +1,5 @@
-package utilities;
+package utilities.Locators;
 
-
-import base.BaseTest;
 
 import objects.FacebookLoginPage__PageFactory;
 import org.openqa.selenium.By;

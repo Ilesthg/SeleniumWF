@@ -1,31 +1,19 @@
 package base;
 
+import ConfigFiles.ConfigProperties;
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.Status;
 import com.aventstack.extentreports.markuputils.ExtentColor;
 import com.aventstack.extentreports.markuputils.MarkupHelper;
-import com.aventstack.extentreports.reporter.ExtentSparkReporter;
-import com.aventstack.extentreports.reporter.configuration.Theme;
-import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.edge.EdgeDriver;
-import org.openqa.selenium.edge.EdgeOptions;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.FirefoxOptions;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
-import utilities.Locators;
+import utilities.BrowserFactory;
 import utilities.PropertiesReader;
 
-import java.io.FileReader;
 import java.lang.reflect.Method;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Objects;
-import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
 //Leaving as public so we can extend from test clases
@@ -44,7 +32,7 @@ public class BaseTest {
     //Use 1 time
     private ExtentReports extent;
     //Use n time
-    public static ExtentTest logger;
+    public ExtentTest logger;
     //  protected Locators loc;
 
 
@@ -52,8 +40,8 @@ public class BaseTest {
     public void initDriver() throws Exception {
         System.out.println("Reading properties file");
 
-        browser = PropertiesReader.giveKeyValueFromProperties("browser");
-        url = PropertiesReader.giveKeyValueFromProperties("url");
+        browser = PropertiesReader.giveKeyValueFromProperties(ConfigProperties.BROWSER);
+        url = PropertiesReader.giveKeyValueFromProperties(ConfigProperties.URL);
     }
 
 
@@ -66,7 +54,7 @@ public class BaseTest {
 
 
     @BeforeMethod
-    public void beforeMethod(Method testMethod) throws Exception {
+    public void beforeMethod(Method testMethod)  {
         System.out.println("Initialazing Driver");
 
         logger = extent.createTest(testMethod.getName());

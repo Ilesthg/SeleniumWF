@@ -6,7 +6,7 @@ package testCases;
 import base.BaseTest;
 import org.testng.annotations.Test;
 import pages.FacebookLoginPage;
-import utilities.ReaderExcelFiles;
+import utilities.GetData.ReaderExcelFiles;
 
 import java.io.IOException;
 
@@ -41,12 +41,13 @@ Solution: Make flp a local variable in each test method to avoid shared state ac
     //--------------------------------------------------------
     //Test for Excel Sheet
 
+
     @Test(dataProviderClass = ReaderExcelFiles.class, dataProvider = "ExcelData")
     public void Sheet1(String username, String password) throws IOException {
         new FacebookLoginPage(getDriverBT()).Sheet1(username, password);
     }
 
-    @Test(dataProviderClass = ReaderExcelFiles.class, dataProvider = "data")
+    @Test(dataProviderClass = ReaderExcelFiles.class, dataProvider = "dataNotScalable")
     public void Sheet2(String username, String password) {
         new FacebookLoginPage(getDriverBT()).Sheet2(username, password);
     }
@@ -56,7 +57,7 @@ Solution: Make flp a local variable in each test method to avoid shared state ac
         new FacebookLoginPage(getDriverBT()).excelTest(obj);
     }
 
-    @Test(dataProviderClass = ReaderExcelFiles.class, dataProvider = "ExcelTest2")
+    @Test(dataProviderClass = ReaderExcelFiles.class, dataProvider = "DataHashMap")
     public void test33(Object obj) {
         new FacebookLoginPage(getDriverBT()).excelTest2(obj);
     }

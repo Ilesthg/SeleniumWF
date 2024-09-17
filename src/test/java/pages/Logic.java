@@ -4,7 +4,7 @@ import base.DriverFactoryParallel;
 import objects.FaceLoginObjects;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import utilities.LocatorsFindByThread;
+import utilities.Locators.LocatorsFindByThread;
 
 public class Logic {
   private static WebDriver driver;

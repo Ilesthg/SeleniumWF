@@ -1,4 +1,4 @@
-package utilities;
+package utilities.Locators;
 
 
 import objects.FacebookLoginPage__PageFactory;

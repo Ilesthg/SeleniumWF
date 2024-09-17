@@ -1,9 +1,9 @@
-package utilities;
+package utilities.GetData;
 
 import java.sql.*;
 import java.util.HashMap;
 
-public class DBConnection {
+public class FromDB {
 
     public synchronized HashMap<String, String> returnDB(String sql){
         HashMap<String, String> hm = new HashMap<>();
