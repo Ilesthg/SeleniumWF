@@ -1,4 +1,4 @@
-package utilities;
+package utilities.Driver;
 
 import com.aventstack.extentreports.ExtentTest;
 import org.openqa.selenium.WebDriver;

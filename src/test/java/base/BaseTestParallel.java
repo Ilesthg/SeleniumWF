@@ -2,15 +2,21 @@ package base;
 
 import ConfigFiles.ConfigProperties;
 import com.aventstack.extentreports.ExtentReports;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.remote.RemoteWebDriver;
+import org.testng.ITestContext;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
 import utilities.BrowserFactory;
-import utilities.PropertiesReader;
-import utilities.GetDriver;
+import utilities.GetData.FromExcel;
+import utilities.GetData.PropertiesReader;
+import utilities.Driver.GetDriver;
 
-import java.lang.reflect.Method;
-import java.util.Objects;
+import java.awt.*;
+import java.io.File;
+import java.io.IOException;
+import java.util.*;
 
 public class BaseTestParallel {
     protected BaseTestParallel() {
@@ -24,31 +30,43 @@ public class BaseTestParallel {
     // private  ExtentTest logger;
     private BrowserFactory bf = new BrowserFactory();
 
-    @BeforeSuite
+
     public void initExtentReports() {
         try {
             browser = PropertiesReader.giveKeyValueFromProperties(ConfigProperties.BROWSER);
-            url = PropertiesReader.giveKeyValueFromProperties(ConfigProperties.URL);
+            url = PropertiesReader.giveKeyValueFromProperties(ConfigProperties.URLFACEBOOK);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
 
-        extent = ExtentReportNG.setUpExtentReports();//OK
+        // extent = ExtentReportNG.setUpExtentReports();//OK
 
 
     }
 
-    @BeforeMethod
-    public void beforeMethod(Method testMethod) {
+    /*    @Parameters({"browser"})*/
+    @BeforeMethod()
+    public void beforeMethod(Object[] data) { //public void beforeMethod( Object[] data) {
+       /* System.setProperty("org.apache.commons.logging.Log", "org.apache.commons.logging.impl.NoOpLog");
+        System.setProperty("webdriver.chrome.silentOutput", "true");*/
+        initExtentReports();
+        Map<String, String> map = (Map<String, String>) data[0];
+
+
+        //    Object [] array = FromExcel.returnExcelSheetInObject();
+        // Map<String, String> map =  (Map<String, String>) data[0];
+        //System.out.println(map.get("username"));
 
 
         if (Objects.isNull(DriverFactoryParallel.getInstance().getDriver())) {
-            DriverFactoryParallel.getInstance().setDriver(bf.setupDriverReturn(browser));
+            DriverFactoryParallel.getInstance().setDriver(bf.setupDriverReturn(map.get("Browser"), data));
         }
 
-        if (Objects.isNull(ExtentTestFactoryParallel.getInstance().getExtentTest())) {
+
+
+/*        if (Objects.isNull(ExtentTestFactoryParallel.getInstance().getExtentTest())) {
             ExtentTestFactoryParallel.getInstance().setExtentTest(extent.createTest(testMethod.getName()));
-        }
+        }*/
 
 
         //WebDriver driver = DriverFactoryParallel.getInstance().GetDriver();
@@ -57,12 +75,16 @@ public class BaseTestParallel {
         driver.navigate().to(url);
 
 
+      /*  TestDataParallel.getInstance().setTestDataParallel(FromExcel.returnListofHashMap4());
+        Object[] dar = TestDataParallel.getInstance().getTestData();*/
+
+        //  System.out.println(  Arrays.toString(data)); //This work with reflection, which is supported cause i create Annotataion Listener which establish the dataProvider
     }
 
     @AfterMethod
     public void afterMethod(ITestResult result) {
 
-            DriverFactoryParallel.getInstance().closeDrivers();
+        DriverFactoryParallel.getInstance().closeDrivers();
 
 
     }
@@ -70,15 +92,24 @@ public class BaseTestParallel {
     @AfterTest
     public void afterTest() {
 
-        if (Objects.nonNull(extent)) {
+      /*  if (Objects.nonNull(extent)) {
             extent.flush();
-        }
+        }*/
 
 
         // SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyy HH-mm-ss");
         //Date date = new Date();
         // String ssDate = format.format(date);
-        //Not working Desktop.getDesktop().browse(new File("C:/Users/vhgm/IdeaProjects/SeleniumWF/src/test/resources/reports/SDTE " + ssDate + ".html").toURI());
+        //Not working
+
     }
+
+  /*  public String dosome(){
+        List<HashMap<String,String>> hashMapList = FromExcel.returnListofHashMap("Cross");
+        for (int i = 0; i < hashMapList.size(); i++) {
+           return hashMapList.get(i).get("browser");
+        }
+        return null;
+    }*/
 
 }

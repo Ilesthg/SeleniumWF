@@ -10,7 +10,7 @@ import org.openqa.selenium.WebDriver;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
 import utilities.BrowserFactory;
-import utilities.PropertiesReader;
+import utilities.GetData.PropertiesReader;
 
 import java.lang.reflect.Method;
 import java.util.Objects;
@@ -41,7 +41,7 @@ public class BaseTest {
         System.out.println("Reading properties file");
 
         browser = PropertiesReader.giveKeyValueFromProperties(ConfigProperties.BROWSER);
-        url = PropertiesReader.giveKeyValueFromProperties(ConfigProperties.URL);
+      //  url = PropertiesReader.giveKeyValueFromProperties(ConfigProperties.URL);
     }
 
 
@@ -52,24 +52,22 @@ public class BaseTest {
 
     }
 
-
+@Parameters({"browser"})
     @BeforeMethod
-    public void beforeMethod(Method testMethod)  {
+    public void beforeMethod(Method testMethod, String br)  {
         System.out.println("Initialazing Driver");
-
+    url = PropertiesReader.giveKeyValueFromProperties(ConfigProperties.URL);
         logger = extent.createTest(testMethod.getName());
         ExtentTestFactoryParallel.getInstance().setExtentTest(logger);
 
         if (Objects.isNull(driver)) {
-            driver = bf.setupDriverReturn(browser);
+           // driver = bf.setupDriverReturn(br);
         }
 
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
         driver.navigate().to(url);
 
-        // Initialize Locators instance
-        //   loc = new Locators(driver);
 
     }
 

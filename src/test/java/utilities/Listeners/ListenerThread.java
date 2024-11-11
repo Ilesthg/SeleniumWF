@@ -1,21 +1,31 @@
-package utilities;
+package utilities.Listeners;
 
 import base.ExtentReportNG;
 import base.ExtentTestFactoryParallel;
+import base.TestDataParallel;
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.Status;
 import com.aventstack.extentreports.markuputils.ExtentColor;
 import com.aventstack.extentreports.markuputils.MarkupHelper;
+import org.testng.IAnnotationTransformer;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
+import org.testng.annotations.ITestAnnotation;
+import utilities.ScreenShotsForTests;
 
+import java.awt.*;
+import java.io.File;
+import java.io.IOException;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.Objects;
 
-public class ListenerThread implements ITestListener {
+public class ListenerThread implements ITestListener, IAnnotationTransformer {
     private ExtentReports extentR;
     private ExtentTest logger;
 
@@ -26,11 +36,11 @@ public class ListenerThread implements ITestListener {
         ITestListener.super.onTestStart(result);
 
         //logger = ExtentTestFactoryParallel.getInstance().getExtentTest();
-        logger = ExtentReportNG.getLoggerFromStaticMethod();
+        //  logger = ExtentReportNG.getLoggerFromStaticMethod();
 
 
-        // logger = extentR.createTest(result.getMethod().getMethodName());//******Declared in BaseTestParallel*********//
-        // ExtentTestFactoryParallel.getInstance().setExtentTest(logger);//********Declared in BaseTestParallel*********//
+        logger = extentR.createTest(result.getMethod().getMethodName());//******Declared in BaseTestParallel*********//
+        ExtentTestFactoryParallel.getInstance().setExtentTest(logger);//********Declared in BaseTestParallel*********//
     }
 
     @Override
@@ -41,25 +51,13 @@ public class ListenerThread implements ITestListener {
             System.out.println("Entre a IF OntestSuccess");
             //logger.log(Status.PASS, MarkupHelper.createLabel(result.getName() + " - Test case SUCCESS", ExtentColor.GREEN));
 
-            try {
-                ScreenShotsForTests.successTestWithSS(result.getName() + " - Test case SUCCESS" , true);
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
+
+            ScreenShotsForTests.successTestWithSS(result.getName() + " - Test case SUCCESS", true);
+
         }
 
-        ExtentTestFactoryParallel.getInstance().removeExtentObject();//*****************//
+        // ExtentTestFactoryParallel.getInstance().removeExtentObject();//*****************//
 
-
-     /*   String ssDate = format.format(date);
-        String FileName = System.getProperty("user.dir") + "/src/test/resources/screenshots/" + ssDate + "_" + result.getName() + ".png";
-        File ss = ((TakesScreenshot) DriverFactoryParallel.getInstance().GetDriver()).getScreenshotAs(OutputType.FILE);
-        try {
-            FileUtils.copyFile(ss, new File(FileName));
-            ExtentTestFactoryParallel.getInstance().removeExtentObject();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }*/
 
     }
 
@@ -69,17 +67,18 @@ public class ListenerThread implements ITestListener {
         System.out.println("Entre a OntestFailure");
         if (result.getStatus() == ITestResult.FAILURE) {
             System.out.println("Entre a IF OntestFailure");
+
             logger.log(Status.FAIL, MarkupHelper.createLabel(result.getName() + " - Test case failed", ExtentColor.RED));
             logger.log(Status.FAIL, MarkupHelper.createLabel(result.getThrowable().toString() + " - Test case failed", ExtentColor.RED));
+           // logger.log(Status.FAIL, MarkupHelper.createLabel(methodCustomizeLogs(result), ExtentColor.GREY)); // Custom logs
             logger.log(Status.FAIL, MarkupHelper.createLabel(Arrays.toString(result.getThrowable().getStackTrace()) + " - Test case failed", ExtentColor.RED));
 
 
-            try {
-                ScreenShotsForTests.failedTestWithSS(result.getName() + " - Test case failed",true);
-            } catch (Exception e) {throw new RuntimeException(e);}
+            ScreenShotsForTests.failedTestWithSS(result.getName() + " - Test case failed", true);
+
         }
 
-        ExtentTestFactoryParallel.getInstance().removeExtentObject();
+        //   ExtentTestFactoryParallel.getInstance().removeExtentObject();
     }
 
     @Override
@@ -89,21 +88,13 @@ public class ListenerThread implements ITestListener {
         if (result.getStatus() == ITestResult.SKIP) {
             System.out.println("Entre a IF Skipped");
             logger.log(Status.SKIP, MarkupHelper.createLabel(result.getName() + " - Test case Skipped", ExtentColor.ORANGE));
-            try {
-                ScreenShotsForTests.skipTestWithSS(result.getTestName(), true);
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
+
+            ScreenShotsForTests.skipTestWithSS(result.getTestName(), true);
+
+
         }
-        ExtentTestFactoryParallel.getInstance().removeExtentObject();//*****************//
+        //   ExtentTestFactoryParallel.getInstance().removeExtentObject();//*****************//
     }
-
-
-
-
-
-
-
 
 
     @Override
@@ -120,12 +111,34 @@ public class ListenerThread implements ITestListener {
     @Override
     public void onStart(ITestContext context) {
         ITestListener.super.onStart(context);
-        //  extentR = ExtentReportNG.setUpExtentReports();//******Declared in BaseTestParallel*********//
+        extentR = ExtentReportNG.setUpExtentReports();//******Declared in BaseTestParallel*********//
     }
 
     @Override
     public void onFinish(ITestContext context) {
         ITestListener.super.onFinish(context);
-        // extentR.flush(); //******Declared in BaseTestParallel*********//
+        if (Objects.nonNull(extentR)) {//******Declared in BaseTestParallel*********//
+            extentR.flush();
+        }
+        try {
+            Desktop.getDesktop().browse(new File(System.getProperty("user.dir") + "/src/test/resources/reports/SDTE/index.html").toURI());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        ExtentTestFactoryParallel.getInstance().removeExtentObject();
+
+    }
+
+    private String methodCustomizeLogs(ITestResult result) {
+        Throwable throwable = result.getThrowable();
+        String stackTrace = Arrays.toString(throwable.getStackTrace())
+                .replace(",", "<br>") // Replace comma with a line break for better readability
+                .replace("[", "")     // Remove the square brackets
+                .replace("]", "");    // Remove the square brackets
+
+// Create a formatted error message
+         String errorMessage = "<b>Test case failed:</b> " + throwable.getMessage() + "<br>" +
+                "<b>Stack Trace:</b><br>" + stackTrace;
+        return errorMessage;
     }
 }

@@ -10,7 +10,7 @@ import com.aventstack.extentreports.reporter.configuration.Theme;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class ExtentReportNG {
+public final class ExtentReportNG {
    // private static ExtentReports extent;
    // private static final String routeDir = System.getProperty("user.dir");
 

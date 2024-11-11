@@ -6,14 +6,34 @@
     <packaging>jar</packaging>
     <build>
         <plugins>
+            <!-- Plugin para compilar en Java  17-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
                 <configuration>
                     <source>8</source>
                     <target>8</target>
+                </configuration> <!-- o la versión adecuada para tu proyecto -->
+              <!--  <configuration>
+                    <source>17</source>
+                    <target>17</target>
+                </configuration>-->
+            </plugin>
+
+            <!-- Plugin para ejecutar pruebas con TestNG -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.22.2</version>
+                <configuration>
+                    <suiteXmlFiles>
+                        <!-- Asegúrate de que el archivo testng.xml esté en la ruta correcta -->
+                        <suiteXmlFile>src/test/resources/testng.xml</suiteXmlFile>
+                    </suiteXmlFiles>
                 </configuration>
             </plugin>
+
         </plugins>
     </build>
     <version>1.0-SNAPSHOT</version>
@@ -26,12 +46,17 @@
             <artifactId>selenium-java</artifactId>
             <version>4.12.1</version>
         </dependency>
-
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.28</version> <!-- Asegúrate de usar una versión compatible con Java 17 -->
+            <scope>provided</scope>
+        </dependency>
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
             <version>7.7.0</version>
-            <scope>compile</scope>
+            <scope>test</scope>
         </dependency>
         <!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
         <dependency>

@@ -1,4 +1,4 @@
-package utilities;
+package utilities.Driver;
 
 import base.DriverFactoryParallel;
 import org.openqa.selenium.WebDriver;

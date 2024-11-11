@@ -4,11 +4,15 @@ import objects.FaceLoginObjects;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import utilities.*;
 import utilities.Locators.Locators;
 import utilities.Locators.LocatorsFindBy;
 
 import java.io.IOException;
+import java.time.Duration;
 import java.util.HashMap;
 
 
@@ -31,6 +35,8 @@ public final class FacebookLoginPage  extends SeleniumMethodsCust {
         loc = new Locators(this.driver); // Cannot move to top, will generate NullPointerExcp
         loc.findElement("Xpath", FaceLoginObjects.emailInputField).sendKeys("HolaCrayola");
     }
+
+
 
     public void loginFacebookTest2() {
         this.driver.findElement(inputEmail).sendKeys("Hola");

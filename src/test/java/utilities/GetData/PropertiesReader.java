@@ -1,12 +1,16 @@
-package utilities;
+package utilities.GetData;
 
 import ConfigFiles.ConfigProperties;
 import ConfigFiles.FrameWorkConstants;
+import exceptions.InvalidFilePathException;
+import exceptions.SeleniumFrameworkException;
 import org.apache.poi.util.StringUtil;
+import org.testng.annotations.DataProvider;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.List;
 import java.util.Objects;
 import java.util.Properties;
 
@@ -31,19 +35,30 @@ public class PropertiesReader {
 
 
     }
-    public static String giveKeyValueFromProperties(ConfigProperties cp) throws Exception {
+    public static String giveKeyValueFromProperties(ConfigProperties cp){
 
 
-        String key = cp.toString().toLowerCase();
-        String valueToReturn = prop.getProperty(key).toLowerCase().toString();
+       String key = cp.toString().toLowerCase(); //browser
+
+        String valueToReturn = prop.getProperty(key).toString();
 
         if (StringUtil.isBlank(key) || Objects.isNull(key) || Objects.isNull(valueToReturn)){
-            throw  new Exception("VALUE IS NOT SPECIFIED FOR THE KEY" + key + "in properties files" );
+            throw  new InvalidFilePathException( "VALUE IS NOT SPECIFIED FOR THE KEY" + key + "in properties files" );
         }
 
         return  valueToReturn;
+    }
+    @DataProvider(name = "browsers", parallel = true)
+    public static  Object[][] dataProviderDataProperties(ConfigProperties cp){
+        String[] arrayBrowsers = prop.getProperty(cp.toString().toLowerCase()).split(",");
+        Object[][] data = new Object[arrayBrowsers.length][1];
 
 
 
+
+        for (int i = 0; i < arrayBrowsers.length; i++) {
+            data[i][0] = arrayBrowsers[i].trim();
+        }
+        return data;
     }
 }

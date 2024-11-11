@@ -16,7 +16,7 @@ import java.util.Date;
 
 public class takeSS extends BaseTest {
 
-    public  void takeScreenS(ITestResult result) throws IOException {
+    public  void takeScreenS(ITestResult result) {
         //WebDriver driver =  driverFromBaseTest();
 
         SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyy HH-mm-ss");
@@ -25,7 +25,12 @@ public class takeSS extends BaseTest {
         String ssDate = format.format(date);
         String FileName = System.getProperty("user.dir") + "/src/test/resources/screenshots/"  +ssDate +"_"+result.getName()+".png";
         File ss = ((TakesScreenshot) getDriverBT()).getScreenshotAs(OutputType.FILE);
-        FileUtils.copyFile(ss, new File(FileName));
+
+        try {
+            FileUtils.copyFile(ss, new File(FileName));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 

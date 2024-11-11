@@ -4,8 +4,13 @@ import ConfigFiles.ConfigProperties;
 import base.ExtentReportNG;
 import com.aventstack.extentreports.MediaEntityBuilder;
 
+import com.aventstack.extentreports.Status;
+import com.aventstack.extentreports.markuputils.ExtentColor;
+import com.aventstack.extentreports.markuputils.MarkupHelper;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
+import utilities.Driver.GetDriver;
+import utilities.GetData.PropertiesReader;
 
 public final class ScreenShotsForTests {
 
@@ -42,18 +47,19 @@ Its valid to assign to a non static variable a static method which returns somet
     public static void skipMessage(String message) {
         ExtentReportNG.getLoggerFromStaticMethod().skip(message);
     }
-    public static void successTestWithSS(String message, boolean screenShotNeeded) throws Exception {
+    public static void successTestWithSS(String message, boolean screenShotNeeded) {
 
         if (PropertiesReader.giveKeyValueFromProperties(ConfigProperties.SUCCESSSCREENSHOT).equalsIgnoreCase("yes") && screenShotNeeded){
-            ExtentReportNG.getLoggerFromStaticMethod().pass(message, MediaEntityBuilder.createScreenCaptureFromBase64String(getBase64Image()).build());
-           /* ExtentReportNG.getLogger().log(Status.PASS, MarkupHelper.createLabel(message, ExtentColor.GREEN));
-            ExtentReportNG.getLogger().pass(MediaEntityBuilder.createScreenCaptureFromBase64String(getBase64Image()).build());*/
+            //ExtentReportNG.getLoggerFromStaticMethod().pass(message, MediaEntityBuilder.createScreenCaptureFromBase64String(getBase64Image()).build());
+            ExtentReportNG.getLoggerFromStaticMethod().log(Status.PASS, MarkupHelper.createLabel(message, ExtentColor.GREEN));
+            ExtentReportNG.getLoggerFromStaticMethod().pass(MediaEntityBuilder.createScreenCaptureFromBase64String(getBase64Image()).build());
+           //Need to abstract logger so only provides pass and logs options ----- ExtentReportNG.getLoggerFromStaticMethod().
         }else {
             passMessage(message);
         }
     }
 
-    public static void failedTestWithSS(String message, boolean screenShotNeeded) throws Exception {
+    public static void failedTestWithSS(String message, boolean screenShotNeeded)  {
 
         if (PropertiesReader.giveKeyValueFromProperties(ConfigProperties.FAILEDSCREENSHOT).equalsIgnoreCase("yes") && screenShotNeeded){
             ExtentReportNG.getLoggerFromStaticMethod().fail(message, MediaEntityBuilder.createScreenCaptureFromBase64String(getBase64Image()).build());
@@ -61,7 +67,7 @@ Its valid to assign to a non static variable a static method which returns somet
             failMessage(message);
         }
     }
-    public static void skipTestWithSS(String message, boolean screenShotNeeded) throws Exception {
+    public static void skipTestWithSS(String message, boolean screenShotNeeded)  {
 
         if (PropertiesReader.giveKeyValueFromProperties(ConfigProperties.SKIPSCREENSHOT).equalsIgnoreCase("yes") && screenShotNeeded){
             ExtentReportNG.getLoggerFromStaticMethod().skip(message, MediaEntityBuilder.createScreenCaptureFromBase64String(getBase64Image()).build());

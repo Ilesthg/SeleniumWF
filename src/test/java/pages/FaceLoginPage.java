@@ -1,14 +1,26 @@
 package pages;
 
 
+import ConfigFiles.ConfigProperties;
 import ConfigFiles.WaitStrategy;
-import utilities.GetDriver;
+import base.TestDataParallel;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.testng.Assert;
+import org.testng.annotations.Test;
+import utilities.Driver.GetDriver;
 import com.aventstack.extentreports.ExtentTest;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import utilities.GetData.FromExcel;
+import utilities.GetData.PropertiesReader;
+import utilities.GetData.WhichTestToExecuteExcel;
 import utilities.SeleniumMethodsCust;
 
+import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 //This class should never extend the basetest class
@@ -32,24 +44,60 @@ public final class FaceLoginPage extends SeleniumMethodsCust {
        *//*this.loggerConstructor = logger;*//*
     }*/
 
-    public FaceLoginPage loginFacebook() {
-        sendKeysBy(inputEmail, "Input Email ", "Victor Hugo", WaitStrategy.PRESENT);
-        sendKeysBy(inputPassword, "Input Password", "Admin123", WaitStrategy.PRESENT);
+    public FaceLoginPage probando1(HashMap<String, String> data) {
+        sendKeysBy(inputEmail, "Input Email ", data.get("username"), WaitStrategy.PRESENT);
+        sendKeysBy(inputPassword, "Input Password", data.get("password"), WaitStrategy.PRESENT);
+
+        /*Assert.assertTrue(false);*/
         return this;
 
     }
-    public FaceLoginPage loginFacebook3() {
-        sendKeysBy(inputEmail, "Input Email ", "Victor v", WaitStrategy.PRESENT);
-        sendKeysBy(inputPassword, "Input Password", "v", WaitStrategy.PRESENT);
-        return this;
+
+    public void probando2(HashMap<String, String> data) {
+        sendKeysBy(inputEmail, "InputEmail", data.get("username"), WaitStrategy.PRESENT);
+        sendKeysBy(inputPassword, "InputPassword",data.get("firstname"), WaitStrategy.PRESENT);
+//        Assert.assertTrue(false);
+    }
+    public void probando3(Object  obj) {
+        HashMap<String, String> data = ((HashMap<String, String>) obj);
+        sendKeysBy(inputEmail, "InputEmail", data.get("username"), WaitStrategy.PRESENT);
+        sendKeysBy(inputPassword, "InputPassword", "dd", WaitStrategy.PRESENT);
 
     }
-    public void newExceltestData2(Object obj) {
-        HashMap<String, String> hm = (HashMap<String, String>) obj;
-        sendKeysBy(inputEmail, "InputEmail", hm.get("nose"), WaitStrategy.PRESENT);
-        sendKeysBy(inputPassword, "InputPassword", hm.get("testDescription"), WaitStrategy.PRESENT);
+
+    public  void dosome() throws IOException, InvalidFormatException {
+
+     /*  Object [] array = FromExcel.returnExcelSheetInObject();
+        HashMap<String, String> data =  (HashMap<String, String>) array[0];
+
+
+
+        System.out.println(data.get("username"));
+        driver.findElement(inputPassword).sendKeys(data.get("username"));
+*/
+
+       /* Map<String,String> dad = (Map<String,String>)data[0];
+
+        for (int i = 0; i < data.length; i++) {
+
+        }
+        System.out.println(dad.get("username"));
+        driver.findElement(inputPassword).sendKeys(dad.get("username"));*/
+
+
+
+
+
+
+
+       /* for (Map.Entry<String, String> entry : dad.entrySet()) { Iterate over a HashMap
+            System.out.println("Key: " + entry.getKey() + ", Value: " + entry.getValue());
+        }*/
 
     }
+
+
+
 
 
 

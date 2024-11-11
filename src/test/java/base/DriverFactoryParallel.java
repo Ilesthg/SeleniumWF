@@ -10,7 +10,7 @@ public final class DriverFactoryParallel {
     private DriverFactoryParallel() {}
 
     private static final DriverFactoryParallel instanceFactoryOfDrivers = new DriverFactoryParallel();
-    private static  ThreadLocal<WebDriver> driver = new ThreadLocal<>();
+    private  ThreadLocal<WebDriver> driver = new ThreadLocal<>();
 
 
     public static DriverFactoryParallel getInstance() {return instanceFactoryOfDrivers;}
@@ -22,7 +22,7 @@ public final class DriverFactoryParallel {
     public void closeDrivers() {
 
         if (Objects.nonNull(driver)) {
-            driver.get().close();
+            driver.get().quit();
             driver.remove();
         }
 

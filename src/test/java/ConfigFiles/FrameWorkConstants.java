@@ -1,6 +1,6 @@
 package ConfigFiles;
 
-import utilities.PropertiesReader;
+import utilities.GetData.PropertiesReader;
 
 import java.text.SimpleDateFormat;
 import java.time.Duration;
@@ -14,6 +14,7 @@ private static final String routeDir = System.getProperty("user.dir");
     private static final Duration timeToWait = Duration.ofSeconds(5);
     private static final String routeDirProperties = System.getProperty("user.dir") + "/src/test/resources/configFiles/data.properties";
     private static final String routeTestExcel = System.getProperty("user.dir") + "/src/test/resources/testData/testData2.xlsx";
+
     private static String dirForCreateExtentReport = "";
 
 

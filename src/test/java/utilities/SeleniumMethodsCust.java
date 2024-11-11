@@ -14,9 +14,12 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.locators.RelativeLocator;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import utilities.Driver.GetDriver;
+
 
 public class SeleniumMethodsCust {
 
@@ -41,7 +44,8 @@ public class SeleniumMethodsCust {
     protected void sendKeys(WebElement webElement, String elementName, String valueToSend) {
 
         try {
-
+            WebElement ee = driver.findElement(RelativeLocator.with(By.tagName("a")).above(webElement).below(webElement)); //Relative locator
+            ee.sendKeys("sdasd");
             System.out.println("Entre al try de sendKeys");
             webElement.sendKeys(valueToSend);
             logger.log(Status.PASS, MarkupHelper.createLabel("Send Keys Method SUCCESS, able to send key on element: ->" + elementName + " with value: ->" + valueToSend, ExtentColor.GREEN));
@@ -112,7 +116,7 @@ public class SeleniumMethodsCust {
     }
 
     protected Boolean isWebElementPresent(WebElement webElement, String elementName) {
-        boolean flag2 = false;
+
         // flag2 = new WebDriverWait(driver, FrameWorkConstants.getTimeToWait()).until(E);
 
         boolean flag = false;

@@ -4,12 +4,11 @@ import ConfigFiles.ConfigProperties;
 import com.aventstack.extentreports.ExtentReports;
 import org.testng.annotations.*;
 import utilities.BrowserFactory;
-import utilities.PropertiesReader;
-import utilities.TestContext;
+import utilities.GetData.PropertiesReader;
+import utilities.Driver.TestContext;
 
 import java.lang.reflect.Method;
 import java.util.Objects;
-import java.util.concurrent.TimeUnit;
 
 //Leaving as public so we can extend from test clases
 public class BaseTestTestContext {//It  does not support parallel testing, if thread count is 2 and you have 3 test.
@@ -55,7 +54,7 @@ public class BaseTestTestContext {//It  does not support parallel testing, if th
         // Seteamos el WebDriver en el TestContext
 
         if (Objects.isNull(TestContext.returnTestContextInstance().getDriver())) {
-           TestContext.returnTestContextInstance().setDriver(bf.setupDriverReturn(browser));
+          // TestContext.returnTestContextInstance().setDriver(bf.setupDriverReturn(browser));
         }
 
         if (Objects.isNull(TestContext.returnTestContextInstance().getLogger())) {
