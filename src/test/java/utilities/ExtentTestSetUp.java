@@ -9,14 +9,14 @@ import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class ExtenteSetUp {
+public class ExtentTestSetUp {
     private final String routeDir = System.getProperty("user.dir");
 
     private ExtentReports extent;
     //Use n time
     private  ExtentTest logger;
 
-    protected ExtenteSetUp(){
+    protected ExtentTestSetUp(){
 
     }
     protected ExtentTest returnLogger() {

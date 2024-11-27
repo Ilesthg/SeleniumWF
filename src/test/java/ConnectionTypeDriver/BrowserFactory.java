@@ -1,4 +1,4 @@
-package utilities;
+package ConnectionTypeDriver;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.checkerframework.checker.units.qual.C;
@@ -29,16 +29,12 @@ import static utilities.GetData.FromExcel.returnListofHashMap;
 
 public final class BrowserFactory {
 
-    private WebDriver driver = GetDriver.getDriverFromStaticMethod();
-    public WebDriver setupDriverReturn(String browser, Object[] data) {
+    public WebDriver setupDriverReturn(String browser) {//String browser, Object[] data
         String runMode = "no";
 
-
-
-        List<HashMap<String, String>>  hashMapList = returnListofHashMap("Data");
-
+       /* List<HashMap<String, String>>  hashMapList = returnListofHashMap("Data");
         Map<String, String> map = (Map<String, String>) data[0];
-        System.out.println(map.get("Browser") + " From data");
+        System.out.println(map.get("Browser") + " From data");*/
 
 
         if (browser.equalsIgnoreCase("Chrome")) {
@@ -48,7 +44,7 @@ public final class BrowserFactory {
             if (runMode.equalsIgnoreCase("yes")) {
                 // System.setProperty("webdriver.chrome.driver", "C:/Drivers/chromedriver.exe");
                 DesiredCapabilities capabilities = new DesiredCapabilities();
-                capabilities.setCapability("browserName", map.get("Browser"));
+                capabilities.setCapability("browserName", browser);//map.get("Browser")
                 capabilities.setCapability("browserVersion", "114.0");   // Usa "browserVersion" en lugar de "chromeVersion"
                 capabilities.setCapability("acceptInsecureCerts", true);
                 //capabilities.setCapability("platformName", "WINDOWS");

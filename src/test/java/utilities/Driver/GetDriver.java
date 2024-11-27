@@ -8,8 +8,9 @@ public final class GetDriver {
     private GetDriver() {
     }
 
+
     public static WebDriver getDriverFromStaticMethod() {
-        return DriverFactoryParallel.getInstance().getDriver();
+            return DriverFactoryParallel.getInstance().getDriver();
 
     }
 

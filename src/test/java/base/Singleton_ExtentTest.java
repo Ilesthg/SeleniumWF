@@ -2,26 +2,26 @@ package base;
 
 import com.aventstack.extentreports.ExtentTest;
 
-public class ExtentTestFactoryParallel
+public class Singleton_ExtentTest
 {
     //Singleton Patter -->
     /*Singleton Pattern:
 
-    In your design, you're using the getInstance() method to enforce that there is only one instance of ExtentTestFactoryParallel via a Singleton pattern.
-    The Singleton guarantees that there will only be one instance of ExtentTestFactoryParallel shared across your entire test suite.
+    In your design, you're using the getInstance() method to enforce that there is only one instance of Singleton_ExtentTest via a Singleton pattern.
+    The Singleton guarantees that there will only be one instance of Singleton_ExtentTest shared across your entire test suite.
     --------------------------
-    You only need ThreadLocal to be static if multiple instances of the class (i.e., ExtentTestFactoryParallel) are created
+    You only need ThreadLocal to be static if multiple instances of the class (i.e., Singleton_ExtentTest) are created
     and you want to ensure that each instance shares the same ThreadLocal variable. Since your design uses a Singleton, this is not the case.
     ------------------
     If NOT using Singleton and  REMOVING STATIC for ThreadLocal will cause the ThreadLocal<ExtentTest> to become instance-specific instead of class-specific.
     tHIS means -> If multiple instances of the class are created, every instance would have its own ThreadLocal<ExtentTest>.ThreadLocal would be re-initialized, and tests may not get the correct ExtentTest
     */
-    private ExtentTestFactoryParallel() {
+    private Singleton_ExtentTest() {
     }
 
-    private static final ExtentTestFactoryParallel instance = new ExtentTestFactoryParallel();
+    private static final Singleton_ExtentTest instance = new Singleton_ExtentTest();
 
-    public static ExtentTestFactoryParallel getInstance() {
+    public static Singleton_ExtentTest getInstance() {
         return instance;
     }
 

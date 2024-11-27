@@ -1,8 +1,7 @@
 package utilities.Listeners;
 
 import base.ExtentReportNG;
-import base.ExtentTestFactoryParallel;
-import base.TestDataParallel;
+import base.Singleton_ExtentTest;
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.Status;
@@ -12,17 +11,12 @@ import org.testng.IAnnotationTransformer;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
-import org.testng.annotations.ITestAnnotation;
 import utilities.ScreenShotsForTests;
 
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Method;
-import java.text.SimpleDateFormat;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.Objects;
 
 public class ListenerThread implements ITestListener, IAnnotationTransformer {
@@ -35,12 +29,12 @@ public class ListenerThread implements ITestListener, IAnnotationTransformer {
         System.out.println("init test from Listener and enter OnTestStart");
         ITestListener.super.onTestStart(result);
 
-        //logger = ExtentTestFactoryParallel.getInstance().getExtentTest();
+        //logger = Singleton_ExtentTest.getInstance().getExtentTest();
         //  logger = ExtentReportNG.getLoggerFromStaticMethod();
 
 
         logger = extentR.createTest(result.getMethod().getMethodName());//******Declared in BaseTestParallel*********//
-        ExtentTestFactoryParallel.getInstance().setExtentTest(logger);//********Declared in BaseTestParallel*********//
+        Singleton_ExtentTest.getInstance().setExtentTest(logger);//********Declared in BaseTestParallel*********//
     }
 
     @Override
@@ -56,7 +50,7 @@ public class ListenerThread implements ITestListener, IAnnotationTransformer {
 
         }
 
-        // ExtentTestFactoryParallel.getInstance().removeExtentObject();//*****************//
+        // Singleton_ExtentTest.getInstance().removeExtentObject();//*****************//
 
 
     }
@@ -78,7 +72,7 @@ public class ListenerThread implements ITestListener, IAnnotationTransformer {
 
         }
 
-        //   ExtentTestFactoryParallel.getInstance().removeExtentObject();
+        //   Singleton_ExtentTest.getInstance().removeExtentObject();
     }
 
     @Override
@@ -93,7 +87,7 @@ public class ListenerThread implements ITestListener, IAnnotationTransformer {
 
 
         }
-        //   ExtentTestFactoryParallel.getInstance().removeExtentObject();//*****************//
+        //   Singleton_ExtentTest.getInstance().removeExtentObject();//*****************//
     }
 
 
@@ -125,7 +119,7 @@ public class ListenerThread implements ITestListener, IAnnotationTransformer {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        ExtentTestFactoryParallel.getInstance().removeExtentObject();
+        Singleton_ExtentTest.getInstance().removeExtentObject();
 
     }
 

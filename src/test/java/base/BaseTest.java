@@ -9,7 +9,7 @@ import com.aventstack.extentreports.markuputils.MarkupHelper;
 import org.openqa.selenium.WebDriver;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
-import utilities.BrowserFactory;
+import ConnectionTypeDriver.BrowserFactory;
 import utilities.GetData.PropertiesReader;
 
 import java.lang.reflect.Method;
@@ -23,25 +23,24 @@ public class BaseTest {
     protected BaseTest() {
     }
 
-
+    private final String routeDir = System.getProperty("user.dir");
     private WebDriver driver;
     private String browser, url;
     private BrowserFactory bf = new BrowserFactory();
-    private final String routeDir = System.getProperty("user.dir");
+
 
     //Use 1 time
     private ExtentReports extent;
     //Use n time
-    public ExtentTest logger;
+    private ExtentTest logger;
     //  protected Locators loc;
 
 
     @BeforeSuite
     public void initDriver() throws Exception {
         System.out.println("Reading properties file");
-
         browser = PropertiesReader.giveKeyValueFromProperties(ConfigProperties.BROWSER);
-      //  url = PropertiesReader.giveKeyValueFromProperties(ConfigProperties.URL);
+          url = PropertiesReader.giveKeyValueFromProperties(ConfigProperties.URL);
     }
 
 
@@ -52,16 +51,16 @@ public class BaseTest {
 
     }
 
-@Parameters({"browser"})
+    /*@Parameters({"browser"})*/
     @BeforeMethod
-    public void beforeMethod(Method testMethod, String br)  {
+    public void beforeMethod(Method testMethod) {
         System.out.println("Initialazing Driver");
-    url = PropertiesReader.giveKeyValueFromProperties(ConfigProperties.URL);
+       // url = PropertiesReader.giveKeyValueFromProperties(ConfigProperties.URL);
         logger = extent.createTest(testMethod.getName());
-        ExtentTestFactoryParallel.getInstance().setExtentTest(logger);
+        Singleton_ExtentTest.getInstance().setExtentTest(logger);
 
         if (Objects.isNull(driver)) {
-           // driver = bf.setupDriverReturn(br);
+            driver = bf.setupDriverReturn(browser);
         }
 
         driver.manage().window().maximize();
@@ -75,12 +74,12 @@ public class BaseTest {
     public void afterMethod(ITestResult result) {
 
         if (result.getStatus() == ITestResult.FAILURE) {
-            ExtentTestFactoryParallel.getInstance().getExtentTest().log(Status.FAIL, MarkupHelper.createLabel(result.getName() + " - Test case failed", ExtentColor.RED));
-            ExtentTestFactoryParallel.getInstance().getExtentTest().log(Status.FAIL, MarkupHelper.createLabel(result.getThrowable() + " - Test case failed", ExtentColor.RED));
+            Singleton_ExtentTest.getInstance().getExtentTest().log(Status.FAIL, MarkupHelper.createLabel(result.getName() + " - Test case failed", ExtentColor.RED));
+            Singleton_ExtentTest.getInstance().getExtentTest().log(Status.FAIL, MarkupHelper.createLabel(result.getThrowable() + " - Test case failed", ExtentColor.RED));
         } else if (result.getStatus() == ITestResult.SKIP) {
-            ExtentTestFactoryParallel.getInstance().getExtentTest().log(Status.SKIP, MarkupHelper.createLabel(result.getName() + " - Test case Skipped", ExtentColor.ORANGE));
+            Singleton_ExtentTest.getInstance().getExtentTest().log(Status.SKIP, MarkupHelper.createLabel(result.getName() + " - Test case Skipped", ExtentColor.ORANGE));
         } else if (result.getStatus() == ITestResult.SUCCESS) {
-            ExtentTestFactoryParallel.getInstance().getExtentTest().log(Status.PASS, MarkupHelper.createLabel(result.getName() + " - Test case SUCCESS", ExtentColor.GREEN));
+            Singleton_ExtentTest.getInstance().getExtentTest().log(Status.PASS, MarkupHelper.createLabel(result.getName() + " - Test case SUCCESS", ExtentColor.GREEN));
             //logger.log(Status.PASS, MarkupHelper.createLabel(result.getName() + " - Test case SUCCESS", ExtentColor.GREEN));
         }
 
@@ -104,7 +103,7 @@ public class BaseTest {
     }
 
     //TO GET DRIVER
-    public WebDriver getDriverBT() {
+    public final WebDriver getDriverBT() {
         return driver;
     }
 

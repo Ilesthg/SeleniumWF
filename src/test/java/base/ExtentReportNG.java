@@ -32,8 +32,7 @@ public final class ExtentReportNG {
 
         ExtentSparkReporter sparkReporter = new ExtentSparkReporter(FrameWorkConstants.decideIfDynamicReport(ConfigProperties.OVERRIDEREPORTS));
 
-        ExtentReports extent;
-        extent = new ExtentReports();
+        ExtentReports extent = new ExtentReports();
         extent.attachReporter(sparkReporter);
 
 
@@ -49,7 +48,7 @@ public final class ExtentReportNG {
         return extent;
     }
     public static ExtentTest getLoggerFromStaticMethod(){
-        return  ExtentTestFactoryParallel.getInstance().getExtentTest();
+        return  Singleton_ExtentTest.getInstance().getExtentTest();
 
     }
 }

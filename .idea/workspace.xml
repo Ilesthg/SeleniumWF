@@ -4,42 +4,23 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="493da8ae-d6cf-4110-a407-38b876a7b056" name="Changes" comment="Fixing threadSafety">
-      <change afterPath="$PROJECT_DIR$/src/test/java/pages/RedditHomePage.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/utilities/GetData/WhichTestToExecuteExcel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/utilities/Listeners/AnnotationTransformer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/utilities/Listeners/MethodInterceptor.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/resources/testng.xml" afterDir="false" />
+    <list default="true" id="493da8ae-d6cf-4110-a407-38b876a7b056" name="Changes" comment="Changing structure">
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/ConfigFiles/ConfigProperties.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/ConfigFiles/ConfigProperties.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/ConfigFiles/FrameWorkConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/ConfigFiles/FrameWorkConstants.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/base/BaseTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/base/BaseTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/base/BaseTestParallel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/base/BaseTestParallel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/base/BaseTestTestContext.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/base/BaseTestTestContext.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/base/DriverFactoryParallel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/base/DriverFactoryParallel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/base/ExtentReportNG.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/base/ExtentReportNG.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/base/ExtentTestFactoryParallel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/base/ExtentTestFactoryParallel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/base/TestDataParallel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/base/TestDataParallel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/pages/FaceLoginPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/pages/FaceLoginPage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/pages/FacebookLoginPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/pages/FacebookLoginPage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/base/ExtentTestFactoryParallel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/base/Singleton_ExtentTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/testCases/Test1.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/testCases/Test1.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/testCases/TestFLP.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/testCases/TestFLP.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/utilities/BrowserFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/utilities/BrowserFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/utilities/GetData/FromExcel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/utilities/GetData/FromExcel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/utilities/GetDriver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/utilities/Driver/GetDriver.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/utilities/ListenerThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/utilities/Listeners/ListenerThread.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/utilities/MethodInterceptor.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/utilities/PropertiesReader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/utilities/GetData/PropertiesReader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/utilities/RetryAnalyzer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/utilities/Listeners/RetryAnalyzer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/utilities/ScreenShotsForTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/utilities/ScreenShotsForTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/utilities/BrowserFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/ConnectionTypeDriver/BrowserFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/utilities/Driver/GetDriver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/utilities/Driver/GetDriver.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/utilities/ExtenteSetUp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/utilities/ExtentTestSetUp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/utilities/GetData/PropertiesReader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/utilities/GetData/PropertiesReader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/utilities/Listeners/ListenerThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/utilities/Listeners/ListenerThread.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/utilities/SeleniumMethodsCust.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/utilities/SeleniumMethodsCust.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/utilities/TestContext.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/utilities/Driver/TestContext.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/utilities/takeSS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/utilities/takeSS.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/resources/configFiles/data.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/resources/configFiles/data.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/resources/testData/testData2.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/resources/testData/testData2.xlsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/testng.xml" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -114,12 +95,13 @@
       <recent name="C:\Users\j\IdeaProjects\SeleniumFramework\TestFrameworkSelenium\src\test\configFiles" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="ConnectionTypeDriver" />
       <recent name="base" />
       <recent name="pages" />
       <recent name="utilities" />
     </key>
   </component>
-  <component name="RunManager" selected="TestNG.C:/Users/vhgm/IdeaProjects/SeleniumWF/Parallel.xml">
+  <component name="RunManager" selected="TestNG.C:/Users/vhgm/IdeaProjects/SeleniumWF/src/test/resources/testng.xml">
     <configuration name="C:/Users/vhgm/IdeaProjects/SeleniumWF/Parallel.xml" type="TestNG" temporary="true" nameIsGenerated="true">
       <module name="TestFrameworkSelenium" />
       <option name="SUITE_NAME" value="$PROJECT_DIR$/Parallel.xml" />
@@ -158,16 +140,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="C:/Users/vhgm/IdeaProjects/SeleniumWF/testng.xml" type="TestNG" temporary="true" nameIsGenerated="true">
-      <module name="TestFrameworkSelenium" />
-      <option name="SUITE_NAME" value="$PROJECT_DIR$/testng.xml" />
-      <option name="TEST_OBJECT" value="SUITE" />
-      <properties />
-      <listeners />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="Test1.gotoPage1" type="TestNG" temporary="true" nameIsGenerated="true">
       <module name="TestFrameworkSelenium" />
       <extension name="coverage">
@@ -186,20 +158,38 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="TestFLP.test1" type="TestNG" temporary="true" nameIsGenerated="true">
+      <module name="TestFrameworkSelenium" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="testCases.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="testCases" />
+      <option name="MAIN_CLASS_NAME" value="testCases.TestFLP" />
+      <option name="METHOD_NAME" value="test1" />
+      <option name="TEST_OBJECT" value="METHOD" />
+      <properties />
+      <listeners />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <list>
+      <item itemvalue="TestNG.TestFLP.test1" />
       <item itemvalue="TestNG.C:/Users/vhgm/IdeaProjects/SeleniumWF/Parallel.xml" />
       <item itemvalue="TestNG.C:/Users/vhgm/IdeaProjects/SeleniumWF/src/test/resources/testng.xml" />
       <item itemvalue="TestNG.C:/Users/vhgm/IdeaProjects/SeleniumWF/target/surefire-reports/testng-failed.xml" />
-      <item itemvalue="TestNG.C:/Users/vhgm/IdeaProjects/SeleniumWF/testng.xml" />
       <item itemvalue="TestNG.Test1.gotoPage1" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="TestNG.C:/Users/vhgm/IdeaProjects/SeleniumWF/target/surefire-reports/testng-failed.xml" />
         <item itemvalue="TestNG.C:/Users/vhgm/IdeaProjects/SeleniumWF/src/test/resources/testng.xml" />
-        <item itemvalue="TestNG.C:/Users/vhgm/IdeaProjects/SeleniumWF/testng.xml" />
-        <item itemvalue="TestNG.C:/Users/vhgm/IdeaProjects/SeleniumWF/Parallel.xml" />
+        <item itemvalue="TestNG.TestFLP.test1" />
         <item itemvalue="TestNG.Test1.gotoPage1" />
+        <item itemvalue="TestNG.C:/Users/vhgm/IdeaProjects/SeleniumWF/Parallel.xml" />
+        <item itemvalue="TestNG.C:/Users/vhgm/IdeaProjects/SeleniumWF/target/surefire-reports/testng-failed.xml" />
       </list>
     </recent_temporary>
   </component>
@@ -268,7 +258,15 @@
       <option name="project" value="LOCAL" />
       <updated>1726554669034</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Changing structure">
+      <option name="closed" value="true" />
+      <created>1731295292043</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1731295292043</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -300,20 +298,26 @@
     <MESSAGE value="Refactoring" />
     <MESSAGE value="Adding TestContext and refactoring" />
     <MESSAGE value="Fixing threadSafety" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixing threadSafety" />
+    <MESSAGE value="Changing structure" />
+    <option name="LAST_COMMIT_MESSAGE" value="Changing structure" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/test/java/utilities/GetData/FromExcel.java</url>
-          <line>55</line>
-          <option name="timeStamp" value="3" />
+          <url>file://$PROJECT_DIR$/src/test/java/utilities/GetData/PropertiesReader.java</url>
+          <line>38</line>
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/utilities/GetData/PropertiesReader.java</url>
+          <line>35</line>
+          <option name="timeStamp" value="7" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/test/java/utilities/GetData/FromExcel.java</url>
-          <line>53</line>
-          <option name="timeStamp" value="4" />
+          <line>46</line>
+          <option name="timeStamp" value="8" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

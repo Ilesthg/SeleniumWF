@@ -3,7 +3,7 @@ package base;
 import ConfigFiles.ConfigProperties;
 import com.aventstack.extentreports.ExtentReports;
 import org.testng.annotations.*;
-import utilities.BrowserFactory;
+import ConnectionTypeDriver.BrowserFactory;
 import utilities.GetData.PropertiesReader;
 import utilities.Driver.TestContext;
 

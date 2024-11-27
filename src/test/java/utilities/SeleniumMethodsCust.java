@@ -24,7 +24,7 @@ import utilities.Driver.GetDriver;
 public class SeleniumMethodsCust {
 
 
-    // private ExtentTest logger = ExtentTestFactoryParallel.getInstance().getExtentTest();
+    // private ExtentTest logger = Singleton_ExtentTest.getInstance().getExtentTest();
     //  private WebDriver driver = DriverFactoryParallel.getInstance().GetDriver();
 
     private WebDriver driver = GetDriver.getDriverFromStaticMethod();

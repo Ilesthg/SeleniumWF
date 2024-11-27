@@ -13,13 +13,13 @@ public final class DriverFactoryParallel {
     private  ThreadLocal<WebDriver> driver = new ThreadLocal<>();
 
 
-    public static DriverFactoryParallel getInstance() {return instanceFactoryOfDrivers;}
-    public void setDriver(WebDriver driversParam) {driver.set(driversParam);}
+    public static  DriverFactoryParallel getInstance() {return instanceFactoryOfDrivers;}
+    public  void setDriver(WebDriver driversParam) {driver.set(driversParam);}
     public WebDriver getDriver() {
         return driver.get();
     }
 
-    public void closeDrivers() {
+    public  void  closeDrivers() {
 
         if (Objects.nonNull(driver)) {
             driver.get().quit();
